@@ -5,8 +5,7 @@ public enum SpotStatus {
     Available
 }
 
-public class Spots {
-    public required Guid Id { get; set; }
+public class Spot : BaseId {
     public required string Name { get; set; }
     public SpotStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }

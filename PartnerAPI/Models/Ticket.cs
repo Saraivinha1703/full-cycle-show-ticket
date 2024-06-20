@@ -5,8 +5,7 @@ public enum TicketKind {
     Half
 }
 
-public class Ticket {
-    public Guid Id { get; set; }
+public class Ticket : BaseId {
     public required string Email { get; set; }
     public TicketKind TicketKind { get; set; }
     public DateTime CreatedAt { get; set; }
