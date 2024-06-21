@@ -1,9 +1,6 @@
-namespace PartnerAPI.Models;
+using Caticket.PartnerAPI.Core.Enums;
 
-public enum SpotStatus {
-    Taken,
-    Available
-}
+namespace Caticket.PartnerAPI.Core.Entities;
 
 public class Spot : BaseId {
     public required string Name { get; set; }

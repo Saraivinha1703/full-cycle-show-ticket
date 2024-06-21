@@ -1,4 +1,4 @@
-namespace PartnerAPI.Models;
+namespace Caticket.PartnerAPI.Core.Entities;
 
 public class Event : BaseId {
     public required string Name { get; set; }

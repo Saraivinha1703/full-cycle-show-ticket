@@ -1,9 +1,6 @@
-namespace PartnerAPI.Models;
+using Caticket.PartnerAPI.Core.Enums;
 
-public enum TicketKind {
-    Full,
-    Half
-}
+namespace Caticket.PartnerAPI.Core.Entities;
 
 public class Ticket : BaseId {
     public required string Email { get; set; }
