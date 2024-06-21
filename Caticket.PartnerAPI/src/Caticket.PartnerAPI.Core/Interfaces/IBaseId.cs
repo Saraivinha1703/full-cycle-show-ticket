@@ -1,6 +1,6 @@
 namespace Caticket.PartnerAPI.Core.Interfaces;
 
-public interface IBase 
+public interface IBaseId
 {
     public Guid Id {get;}
 }
