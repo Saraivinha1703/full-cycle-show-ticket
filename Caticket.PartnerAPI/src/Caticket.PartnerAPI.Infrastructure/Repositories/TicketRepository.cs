@@ -8,7 +8,7 @@ public class TicketRepository(DatabaseContext<Ticket> context) : IRepository<Tic
 {
     private readonly DatabaseContext<Ticket> context = context;
 
-    public Task CreateAsync()
+    public Task CreateAsync(Ticket ticket)
     {
         throw new NotImplementedException();
     }
@@ -18,7 +18,7 @@ public class TicketRepository(DatabaseContext<Ticket> context) : IRepository<Tic
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Ticket>> GetAllAsync()
+    public Task<IQueryable<Ticket>> GetAllAsync()
     {
         throw new NotImplementedException();
     }

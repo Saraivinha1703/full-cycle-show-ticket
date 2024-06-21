@@ -8,7 +8,7 @@ public class EventRepository(DatabaseContext<Event> context) : IRepository<Event
 {
     private readonly DatabaseContext<Event> context = context;
 
-    public Task CreateAsync()
+    public Task CreateAsync(Event e)
     {
         throw new NotImplementedException();
     }
@@ -18,7 +18,7 @@ public class EventRepository(DatabaseContext<Event> context) : IRepository<Event
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Event>> GetAllAsync()
+    public Task<IQueryable<Event>> GetAllAsync()
     {
         throw new NotImplementedException();
     }

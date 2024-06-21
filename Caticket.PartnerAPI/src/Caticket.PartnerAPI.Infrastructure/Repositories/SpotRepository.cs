@@ -8,7 +8,7 @@ public class SpotRepository(DatabaseContext<Spot> context) : IRepository<Spot>
 {
     private readonly DatabaseContext<Spot> context = context;
 
-    public Task CreateAsync()
+    public Task CreateAsync(Spot spot)
     {
         throw new NotImplementedException();
     }
@@ -18,7 +18,7 @@ public class SpotRepository(DatabaseContext<Spot> context) : IRepository<Spot>
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Spot>> GetAllAsync()
+    public Task<IQueryable<Spot>> GetAllAsync()
     {
         throw new NotImplementedException();
     }

@@ -8,7 +8,7 @@ public class ReservationHistoryRepository(DatabaseContext<ReservationHistory> co
 {
     private readonly DatabaseContext<ReservationHistory> context = context;
 
-    public Task CreateAsync()
+    public Task CreateAsync(ReservationHistory reservationHistory)
     {
         throw new NotImplementedException();
     }
@@ -18,7 +18,7 @@ public class ReservationHistoryRepository(DatabaseContext<ReservationHistory> co
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ReservationHistory>> GetAllAsync()
+    public Task<IQueryable<ReservationHistory>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
