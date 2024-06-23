@@ -1,7 +1,7 @@
-using Caticket.PartnerAPI.Core.Enums;
+using Caticket.PartnerAPI.Domain.Enums;
 
-namespace Caticket.PartnerAPI.Core.Entities;
-public class ReservationHistory : BaseId {
+namespace Caticket.PartnerAPI.Domain.Entities;
+public class ReservationHistory : BaseEntity {
     public string? Email { get; set; }
     public TicketKind TicketKind { get; set; }
     public SpotStatus Status { get; set; }

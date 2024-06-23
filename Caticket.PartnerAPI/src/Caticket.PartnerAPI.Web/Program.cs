@@ -1,3 +1,4 @@
+using Caticket.PartnerAPI.Infrastructure.Services;
 using Caticket.PartnerAPI.Web.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.ConfigureDatabase();
 
 var app = builder.Build();
 

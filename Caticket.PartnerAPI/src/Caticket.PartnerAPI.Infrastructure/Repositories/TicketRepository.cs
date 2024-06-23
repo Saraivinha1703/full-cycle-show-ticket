@@ -1,60 +1,9 @@
-using Caticket.PartnerAPI.Core.Entities;
-using Caticket.PartnerAPI.Core.Interfaces;
+using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Infrastructure.Data;
+using Caticket.PartnerAPI.Infrastructure.Interfaces;
 
 namespace Caticket.PartnerAPI.Infrastructure.Repositories;
 
-public class TicketRepository(DatabaseContext<Ticket> context) : IRepository<Ticket>
+public class TicketRepository(DatabaseContext dbContext) : Repository<Ticket>(dbContext)
 {
-    private readonly DatabaseContext<Ticket> context = context;
-
-    public Task CreateAsync(Ticket ticket)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IQueryable<Ticket>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Ticket> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<int> SaveAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task UpdateAsync(Guid id, Ticket entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    //IDisbosable interface implementation
-    private bool disposed = false;
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!disposed)
-        {
-            if (disposing)
-            {
-                context.Dispose();
-            }
-        }
-        disposed = true;
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
 }

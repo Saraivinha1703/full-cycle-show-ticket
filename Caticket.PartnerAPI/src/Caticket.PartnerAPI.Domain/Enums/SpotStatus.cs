@@ -1,4 +1,4 @@
-namespace Caticket.PartnerAPI.Core.Enums;
+namespace Caticket.PartnerAPI.Domain.Enums;
 
 public enum SpotStatus {
     Taken,

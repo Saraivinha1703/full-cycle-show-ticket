@@ -1,6 +1,6 @@
-namespace Caticket.PartnerAPI.Core.Entities;
+namespace Caticket.PartnerAPI.Domain.Entities;
 
-public class Event : BaseId {
+public class Event : BaseEntity {
     public required string Name { get; set; }
     public string? Description { get; set; }
     public DateTime Date { get; set; }

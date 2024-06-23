@@ -1,8 +1,8 @@
-using Caticket.PartnerAPI.Core.Enums;
+using Caticket.PartnerAPI.Domain.Enums;
 
-namespace Caticket.PartnerAPI.Core.Entities;
+namespace Caticket.PartnerAPI.Domain.Entities;
 
-public class Spot : BaseId {
+public class Spot : BaseEntity {
     public required string Name { get; set; }
     public SpotStatus Status { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
