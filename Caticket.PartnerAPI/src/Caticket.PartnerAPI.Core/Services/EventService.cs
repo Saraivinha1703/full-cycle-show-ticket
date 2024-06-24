@@ -7,7 +7,7 @@ namespace Caticket.PartnerAPI.Core.Services;
 public class EventService(IEventRepository eventRepository) {
     private readonly IEventRepository _eventRepository = eventRepository;
 
-    public async Task CreateEvent(ICreateEventDto createEventDto) {
+    public async Task<Event> CreateEvent(ICreateEventDto createEventDto) {
         Event e = new() {
             Name = createEventDto.Name, 
             Description = createEventDto.Description,
@@ -18,6 +18,7 @@ public class EventService(IEventRepository eventRepository) {
                 : DateTime.Now,
         };
         await _eventRepository.CreateAsync(e);
+        return e;
     }
 
     public async Task<IEnumerable<Event>> GetEventByName(string name) {

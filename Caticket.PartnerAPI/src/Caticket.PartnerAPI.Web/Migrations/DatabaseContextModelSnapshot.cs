@@ -106,6 +106,8 @@ namespace Caticket.PartnerAPI.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EventId");
+
                     b.ToTable("Spot");
                 });
 
@@ -134,6 +136,22 @@ namespace Caticket.PartnerAPI.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ticket");
+                });
+
+            modelBuilder.Entity("Caticket.PartnerAPI.Domain.Entities.Spot", b =>
+                {
+                    b.HasOne("Caticket.PartnerAPI.Domain.Entities.Event", "Event")
+                        .WithMany("Spots")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("Caticket.PartnerAPI.Domain.Entities.Event", b =>
+                {
+                    b.Navigation("Spots");
                 });
 #pragma warning restore 612, 618
         }

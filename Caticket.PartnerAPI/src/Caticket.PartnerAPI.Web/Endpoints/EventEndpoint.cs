@@ -18,7 +18,7 @@ public class Dto {
 public static class EventEndpoint {
     public static void MapEventEndpoints(this WebApplication app) {
         app.MapGet(
-            "/event", 
+            "/events", 
             async (Dto dto, [FromServices] EventService eventService) => {
                 if(dto.Name == null) return await eventService.GetAllEvents();
             
@@ -27,15 +27,14 @@ public static class EventEndpoint {
         );
         
         app.MapPost(
-            "/event", 
+            "/events", 
             async ([FromBody] CreateEventDto eventDto, [FromServices] EventService eventService) => {
-                await eventService.CreateEvent(eventDto);
-                return "event created!";
+                return await eventService.CreateEvent(eventDto);
             }
         );
 
         app.MapPatch(
-            "/event", 
+            "/events", 
             async ([FromBody] UpdateEventDto updateEventDto, [FromServices] EventService eventService) => {
                 await eventService.Update(updateEventDto);
                 return "event updated!";
@@ -43,7 +42,7 @@ public static class EventEndpoint {
         );
 
         app.MapDelete(
-            "/event", 
+            "/events", 
             async ([FromBody] BaseDeleteDto deleteDto, [FromServices] EventService eventService) => {
                 await eventService.Delete(deleteDto.Id);
                 return "event deleted!";
