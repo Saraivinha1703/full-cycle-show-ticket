@@ -1,4 +1,5 @@
 using Caticket.PartnerAPI.Core.Services;
+using Caticket.PartnerAPI.Web.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Caticket.PartnerAPI.Web.Endpoints;
@@ -10,8 +11,8 @@ public static class EventEndpoint {
         
         app.MapPost(
             "/event", 
-            async ([FromServices] EventService _eventService) => {
-                await _eventService.CreateEvent("a");
+            async ([FromBody] CreateEventDto eventDto, [FromServices] EventService _eventService) => {
+                await _eventService.CreateEvent(eventDto);
                 return "event created!";
             }
         );
