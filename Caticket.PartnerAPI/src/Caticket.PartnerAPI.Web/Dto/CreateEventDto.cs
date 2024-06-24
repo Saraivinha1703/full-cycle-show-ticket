@@ -1,11 +1,13 @@
-using Caticket.PartnerAPI.Core.Interfaces.DTO;
+
+using Caticket.PartnerAPI.Domain.Interfaces.DTO.Event;
 
 namespace Caticket.PartnerAPI.Web.DTO;
 
 public record CreateEventDto(
-    string Name, 
-    string? Description, 
-    DateTime? UpdatedAt, 
-    DateTime? CreatedAt, 
+    string Name,
+    string? Description,
+    DateTime Date,
+    DateTime? UpdatedAt,
+    DateTime? CreatedAt,
     decimal Price
 ) : ICreateEventDto;
