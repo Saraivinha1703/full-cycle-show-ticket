@@ -1,7 +1,25 @@
+GET http://localhost:5196/event
 ###
-POST http://localhost:5196/event-name
+POST http://localhost:5196/event
 Content-Type: application/json
 
 {
-    "name": "a"
+    "name": "b"
+}
+
+###
+PATCH http://localhost:5196/event
+Content-Type: application/json
+
+{
+    "id": "2404e16e-eebd-499c-9f9e-0c3c1a7db2c0",
+    "name": "aaaa"
+}
+
+###
+DELETE http://localhost:5196/event
+Content-Type: application/json
+
+{
+    "id": "bf115ba1-e006-4809-9194-ea76fdee0baa"
 }
