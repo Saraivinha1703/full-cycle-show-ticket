@@ -24,7 +24,7 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
         await SaveAsync();
     }
 
-    public virtual Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, bool? queryable = false, bool? trackable = false)
+    public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, bool? queryable = false, bool? trackable = false)
     {
         IEnumerable<T> list = [];
         if(queryable == true && trackable == false) {
@@ -47,9 +47,15 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
             } else {
                 list = [.. _dbContext.Set<T>().AsTracking().AsQueryable()];
             }
+        } else {
+            if (predicate != null) {
+                list = await _dbContext.Set<T>().Where(predicate).AsNoTracking().ToListAsync();
+            } else {
+                list = await _dbContext.Set<T>().AsNoTracking().ToListAsync();
+            }
         }
 
-        return Task.FromResult(list);
+        return list;
     }
 
     public virtual async Task<T> GetByIdAsync(Guid id) =>

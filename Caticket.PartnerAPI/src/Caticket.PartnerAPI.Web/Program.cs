@@ -1,3 +1,4 @@
+using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Infrastructure.Services;
 using Caticket.PartnerAPI.Web.Endpoints;
 
@@ -9,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureDatabase();
+builder.Services.AddCoreServices();
 
 var app = builder.Build();
 

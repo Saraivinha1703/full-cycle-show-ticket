@@ -1,8 +1,17 @@
-using Caticket.PartnerAPI.Core.Entities;
-using Caticket.PartnerAPI.Core.Interfaces;
+using Caticket.PartnerAPI.Domain.Entities;
+using Caticket.PartnerAPI.Domain.Interfaces;
 
 namespace Caticket.PartnerAPI.Core.Services;
 
-public class EventService(IRepository<Event> eventRepository) {
-    private readonly IRepository<Event> _eventRepository = eventRepository;
+public class EventService(IEventRepository eventRepository) {
+    private readonly IEventRepository _eventRepository = eventRepository;
+
+    public async Task CreateEvent(string name) {
+        Event e = new() {Name = name};
+        await _eventRepository.CreateAsync(e);
+    }
+
+    public async Task<IEnumerable<Event>> GetEventByName(string name) {
+        return await _eventRepository.GetEventByNameAsync(name);
+    }
 }
