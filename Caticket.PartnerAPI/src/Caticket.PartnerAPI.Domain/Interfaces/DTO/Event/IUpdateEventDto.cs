@@ -4,6 +4,6 @@ public interface IUpdateEventDto {
     Guid Id {get;}
     string Name {get;} 
     string? Description {get;}
-    DateTime Date {get;} 
+    string Date {get;} 
     decimal Price {get;}
 }

@@ -61,6 +61,7 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
     public virtual async Task<T> GetByIdAsync(Guid id) =>
         await _dbContext.Set<T>()
             .Where(t => t.Id == id)
+            .AsNoTracking()
             .FirstOrDefaultAsync() 
             ?? throw new Exception("The entity for this id");
 

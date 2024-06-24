@@ -7,6 +7,6 @@ public record UpdateEventDto(
     Guid Id,
     string Name, 
     string? Description, 
-    DateTime Date, 
+    string Date, 
     decimal Price
 ) : IUpdateEventDto;

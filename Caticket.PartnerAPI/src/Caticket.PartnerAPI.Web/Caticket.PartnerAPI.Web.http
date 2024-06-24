@@ -4,7 +4,9 @@ POST http://localhost:5196/event
 Content-Type: application/json
 
 {
-    "name": "b"
+    "name": "b",
+    "price": 0,
+    "date": "2024-07-25T20:30:00"
 }
 
 ###
@@ -12,8 +14,11 @@ PATCH http://localhost:5196/event
 Content-Type: application/json
 
 {
-    "id": "2404e16e-eebd-499c-9f9e-0c3c1a7db2c0",
-    "name": "aaaa"
+    "id": "56b883cc-270f-4f35-a6e5-c9cf7bef984c",
+    "name": "bbb",
+    "price": 32.99,
+    "description": "Some desc",
+    "date": "2024-07-28T22:22:00"
 }
 
 ###
@@ -21,5 +26,5 @@ DELETE http://localhost:5196/event
 Content-Type: application/json
 
 {
-    "id": "bf115ba1-e006-4809-9194-ea76fdee0baa"
+    "id": "56b883cc-270f-4f35-a6e5-c9cf7bef984c"
 }

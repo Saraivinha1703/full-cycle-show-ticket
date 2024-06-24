@@ -6,8 +6,7 @@ namespace Caticket.PartnerAPI.Web.DTO;
 public record CreateEventDto(
     string Name,
     string? Description,
-    DateTime Date,
-    DateTime? UpdatedAt,
-    DateTime? CreatedAt,
+    string Date,
+    string? CreatedAt,
     decimal Price
 ) : ICreateEventDto;

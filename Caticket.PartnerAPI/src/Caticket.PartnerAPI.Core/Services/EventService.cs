@@ -8,7 +8,15 @@ public class EventService(IEventRepository eventRepository) {
     private readonly IEventRepository _eventRepository = eventRepository;
 
     public async Task CreateEvent(ICreateEventDto createEventDto) {
-        Event e = new() {Name = createEventDto.Name};
+        Event e = new() {
+            Name = createEventDto.Name, 
+            Description = createEventDto.Description,
+            Price = createEventDto.Price,
+            Date = DateTime.Parse(createEventDto.Date),
+            CreatedAt = createEventDto.CreatedAt != null 
+                ? DateTime.Parse(createEventDto.CreatedAt) 
+                : DateTime.Now,
+        };
         await _eventRepository.CreateAsync(e);
     }
 
@@ -21,14 +29,17 @@ public class EventService(IEventRepository eventRepository) {
     }
 
     public async Task Update(IUpdateEventDto updateEventDto) {
+        var e = await _eventRepository.GetByIdAsync(updateEventDto.Id);
+
         await _eventRepository.UpdateAsync(
             new() { 
                 Id = updateEventDto.Id,
                 Name = updateEventDto.Name,
                 Description = updateEventDto.Description,
+                CreatedAt = e.CreatedAt,
                 UpdatedAt = DateTime.Now,
                 Price = updateEventDto.Price,
-                Date = updateEventDto.Date,
+                Date = DateTime.Parse(updateEventDto.Date),
             }
         );
     } 
