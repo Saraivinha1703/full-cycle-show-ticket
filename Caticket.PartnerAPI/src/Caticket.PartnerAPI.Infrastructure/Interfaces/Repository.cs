@@ -68,7 +68,7 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
 
     public virtual async Task UpdateAsync(T entity)
     {
-        _dbContext.Update(entity);
+        _dbContext.Set<T>().Update(entity);
         await SaveAsync();
     }
 
