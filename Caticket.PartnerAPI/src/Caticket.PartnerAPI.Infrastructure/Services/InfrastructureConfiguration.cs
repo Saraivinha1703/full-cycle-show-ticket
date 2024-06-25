@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Caticket.PartnerAPI.Infrastructure.Services;
 
 public static class InfrastructureConfiguration {
+    /// <summary>
+    /// The database configuration and dependency injection is made on the <c>Infrastructure</c> layer.
+    /// </summary>
     public static void ConfigureDatabase(this IServiceCollection services) {
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
         var connectionString = "server=database;user=root;password=root;database=api";
