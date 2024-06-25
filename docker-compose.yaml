@@ -6,3 +6,9 @@ services:
       MYSQL_DATABASE: api
     ports:
       - 3307:3306
+  app:
+    build: ./Caticket.PartnerAPI
+    ports:
+      - 5000:5000
+    volumes:
+      - ./Caticket.PartnerAPI:/home/dotnet/app

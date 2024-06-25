@@ -1,7 +1,7 @@
-GET http://localhost:5196/events
+GET http://localhost:5000/events
 ###
 # @name createEvent
-POST http://localhost:5196/events
+POST http://localhost:5000/events
 Content-Type: application/json
 
 {
@@ -11,11 +11,11 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:5196/events
+PATCH http://localhost:5000/events
 Content-Type: application/json
 
 {   
-    "id": "3d7f658d-812e-4dae-bcd3-b33090925a2e",
+    "id": "330c50d8-e357-441e-8fa5-d4a1fe1f6258",
     "name": "bbb",
     "price": 32.99,
     "description": "Some desc",
@@ -23,23 +23,24 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5196/events
+DELETE http://localhost:5000/events
 Content-Type: application/json
 
-{
-    "id": "56b883cc-270f-4f35-a6e5-c9cf7bef984c"
+{   
+    "id": "6f7b91c5-d99a-4d23-b08d-ab749d8394ea"
 }
 
+###
 @eventId = {{ createEvent.response.body.id }}
 
 ###
 # @name createSpot
-GET http://localhost:5196/events/{{eventId}}/spots
+GET http://localhost:5000/events/{{eventId}}/spots
 
 ###
-POST http://localhost:5196/events/{{eventId}}/spots
+POST http://localhost:5000/events/{{eventId}}/spots
 Content-Type: application/json
 
 {
-    "name": "B3"
+    "name": "A3"
 }

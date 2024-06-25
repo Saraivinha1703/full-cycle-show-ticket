@@ -10,7 +10,7 @@ namespace Caticket.PartnerAPI.Infrastructure.Services;
 public static class InfrastructureConfiguration {
     public static void ConfigureDatabase(this IServiceCollection services) {
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
-        var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
+        var connectionString = "server=database;user=root;password=root;database=api";
         
         services.AddDbContext<DatabaseContext>(
             options => options.UseMySql(

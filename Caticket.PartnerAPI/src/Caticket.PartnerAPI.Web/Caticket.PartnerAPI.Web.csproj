@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Caticket.PartnerAPI.Core\Caticket.PartnerAPI.Core.csproj" />
     <ProjectReference Include="..\Caticket.PartnerAPI.Infrastructure\Caticket.PartnerAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\Caticket.PartnerAPI.Domain\Caticket.PartnerAPI.Domain.csproj" />
   </ItemGroup>
 
 </Project>
