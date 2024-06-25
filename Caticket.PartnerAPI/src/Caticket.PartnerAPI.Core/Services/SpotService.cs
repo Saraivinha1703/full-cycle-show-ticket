@@ -10,7 +10,7 @@ public class SpotService(IRepository<Spot> spotRepository, IEventRepository even
     private readonly IEventRepository _eventRepository = eventRepository;
 
     public async Task<IEnumerable<Spot>> GetAllSpots(Guid eventId) {
-        return await _spotRepository.GetAllAsync(s => s.EventId == eventId);
+        return await _spotRepository.GetAllAsync(s => s.Event.Id == eventId);
     }
 
     public async Task<Spot> CreateSpot(Guid eventId, ICreateSpotDto createSpotDto) {
@@ -20,7 +20,7 @@ public class SpotService(IRepository<Spot> spotRepository, IEventRepository even
             Name = createSpotDto.Name,
             CreatedAt = DateTime.Now,
             Status = SpotStatus.Available,
-            EventId = eventId, 
+            Event = e,
         };
 
         await _spotRepository.CreateAsync(spot);

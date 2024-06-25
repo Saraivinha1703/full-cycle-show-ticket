@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Caticket.PartnerAPI.Domain.Enums;
 
 namespace Caticket.PartnerAPI.Domain.Entities;
@@ -8,8 +7,6 @@ public class Spot : BaseEntity {
     public SpotStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    
-    [ForeignKey("Event")]
-    public required Guid EventId { get; set; }
-    public virtual Event? Event { get; set; }
+    public required virtual Event Event { get; set; }
+    public virtual Ticket? Ticket { get; set; }
 }

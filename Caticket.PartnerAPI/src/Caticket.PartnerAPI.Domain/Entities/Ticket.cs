@@ -7,5 +7,5 @@ public class Ticket : BaseEntity {
     public TicketKind TicketKind { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public Guid SpotId { get; set; }
+    public required virtual Spot Spot { get; set; }
 }

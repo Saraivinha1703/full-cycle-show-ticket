@@ -5,7 +5,8 @@ namespace Caticket.PartnerAPI.Infrastructure.Mappers;
 
 public class SpotMap {
     public SpotMap(EntityTypeBuilder<Spot> entityBuilder) {
-        entityBuilder.HasKey(e => e.Id);
-        entityBuilder.Property(e => e.Name).IsRequired();
+        entityBuilder.HasKey(s => s.Id);
+        entityBuilder.Property(s => s.Name).IsRequired();
+        entityBuilder.HasOne(s => s.Event).WithMany(e => e.Spots);
     }
 }

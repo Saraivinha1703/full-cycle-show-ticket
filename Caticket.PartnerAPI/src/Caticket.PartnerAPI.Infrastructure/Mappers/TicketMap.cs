@@ -5,7 +5,8 @@ namespace Caticket.PartnerAPI.Infrastructure.Mappers;
 
 public class TicketMap {
     public TicketMap(EntityTypeBuilder<Ticket> entityBuilder) {
-        entityBuilder.HasKey(e => e.Id);
-        entityBuilder.Property(e => e.Email).IsRequired();
+        entityBuilder.HasKey(t => t.Id);
+        entityBuilder.Property(t => t.Email).IsRequired();
+        entityBuilder.HasOne(t => t.Spot).WithOne(s => s.Ticket).IsRequired();
     }
 }

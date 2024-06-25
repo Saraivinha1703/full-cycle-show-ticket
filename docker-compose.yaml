@@ -6,6 +6,8 @@ services:
       MYSQL_DATABASE: api
     ports:
       - 3307:3306
+    #volumes:
+    #  - ./.docker/dbdata:/var/lib/mysql
   app:
     build: ./Caticket.PartnerAPI
     ports:
