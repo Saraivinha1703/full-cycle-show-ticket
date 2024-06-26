@@ -13,7 +13,10 @@ public static class InfrastructureConfiguration {
     /// </summary>
     public static void ConfigureDatabase(this IServiceCollection services) {
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
-        var connectionString = "server=database;user=root;password=root;database=api";
+        //running on container
+        // var connectionString = "server=database;user=root;password=root;database=api";
+        //running locally
+        var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
         
         services.AddDbContext<DatabaseContext>(
             options => options.UseMySql(

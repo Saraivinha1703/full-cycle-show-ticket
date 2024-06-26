@@ -7,6 +7,6 @@ public class TicketMap {
     public TicketMap(EntityTypeBuilder<Ticket> entityBuilder) {
         entityBuilder.HasKey(t => t.Id);
         entityBuilder.Property(t => t.Email).IsRequired();
-        entityBuilder.HasOne(t => t.Spot).WithOne(s => s.Ticket).IsRequired();
+        entityBuilder.HasOne(t => t.Spot);
     }
 }
