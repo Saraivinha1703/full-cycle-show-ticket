@@ -27,8 +27,8 @@ public static class InfrastructureConfiguration {
         );
 
         services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<ISpotRepository, SpotRepository>();
         services.AddScoped<IRepository<ReservationHistory>, ReservationHistoryRepository>();
-        services.AddScoped<IRepository<Spot>, SpotRepository>();
         services.AddScoped<IRepository<Ticket>, TicketRepository>();
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Caticket.PartnerAPI.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240626092737_Initial")]
+    [Migration("20240626150700_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -82,6 +82,8 @@ namespace Caticket.PartnerAPI.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SpotId");
+
                     b.ToTable("ReservationHistory");
                 });
 
@@ -143,10 +145,21 @@ namespace Caticket.PartnerAPI.Web.Migrations
                     b.ToTable("Ticket");
                 });
 
+            modelBuilder.Entity("Caticket.PartnerAPI.Domain.Entities.ReservationHistory", b =>
+                {
+                    b.HasOne("Caticket.PartnerAPI.Domain.Entities.Spot", "Spot")
+                        .WithMany()
+                        .HasForeignKey("SpotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Spot");
+                });
+
             modelBuilder.Entity("Caticket.PartnerAPI.Domain.Entities.Spot", b =>
                 {
                     b.HasOne("Caticket.PartnerAPI.Domain.Entities.Event", "Event")
-                        .WithMany("Spots")
+                        .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -163,11 +176,6 @@ namespace Caticket.PartnerAPI.Web.Migrations
                         .IsRequired();
 
                     b.Navigation("Spot");
-                });
-
-            modelBuilder.Entity("Caticket.PartnerAPI.Domain.Entities.Event", b =>
-                {
-                    b.Navigation("Spots");
                 });
 #pragma warning restore 612, 618
         }

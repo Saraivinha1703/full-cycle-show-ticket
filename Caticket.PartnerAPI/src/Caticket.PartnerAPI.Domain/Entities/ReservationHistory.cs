@@ -8,4 +8,5 @@ public class ReservationHistory : BaseEntity {
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public required Guid SpotId { get; set; }
+    public virtual Spot? Spot {get; set;}
 }

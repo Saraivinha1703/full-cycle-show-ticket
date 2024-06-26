@@ -7,6 +7,5 @@ public class SpotMap {
     public SpotMap(EntityTypeBuilder<Spot> entityBuilder) {
         entityBuilder.HasKey(s => s.Id);
         entityBuilder.Property(s => s.Name).IsRequired();
-        entityBuilder.HasOne(s => s.Event).WithMany(e => e.Spots);
     }
 }

@@ -3,8 +3,8 @@ using Caticket.PartnerAPI.Domain.Interfaces;
 
 namespace Caticket.PartnerAPI.Core.Services;
 
-public class SpotService(IRepository<Spot> spotRepository, IEventRepository eventRepository) {
-    private readonly IRepository<Spot> _spotRepository = spotRepository;
+public class SpotService(ISpotRepository spotRepository, IEventRepository eventRepository) {
+    private readonly ISpotRepository _spotRepository = spotRepository;
     private readonly IEventRepository _eventRepository = eventRepository;
 
     public async Task<IEnumerable<Spot>> GetAllSpots(Guid eventId) {
@@ -13,7 +13,7 @@ public class SpotService(IRepository<Spot> spotRepository, IEventRepository even
 
     public async Task<Spot> CreateSpot(Guid eventId, Spot createSpot) {
         var _ = await _eventRepository.GetByIdAsync(eventId) ?? throw new Exception("Invalid event Id");
-        
+
         await _spotRepository.CreateAsync(createSpot);
 
         return createSpot;

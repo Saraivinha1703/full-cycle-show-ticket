@@ -15,7 +15,7 @@ PATCH http://localhost:5000/events
 Content-Type: application/json
 
 {   
-    "id": "504aef7e-be45-41a9-ae73-6d08e7a1946f",
+    "id": "e3fe0213-c768-483e-b04e-f4988ef86232",
     "name": "bbb",
     "price": 32.99,
     "description": "Some desc",
@@ -42,5 +42,15 @@ POST http://localhost:5000/events/{{eventId}}/spots
 Content-Type: application/json
 
 {
-    "name": "A2"
+    "name": "A3"
+}
+
+###
+POST http://localhost:5000/events/{{eventId}}/spots/reserve
+Content-Type: application/json
+
+{
+    "spots": ["A1"],
+    "email": "a@a.com",
+    "ticketKind": 1
 }

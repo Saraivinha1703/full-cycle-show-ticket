@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Caticket.PartnerAPI.Core.Services;
+using Caticket.PartnerAPI.Core.DTO.Event;
 using Caticket.PartnerAPI.Web.DTO.Spot;
 using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Domain.Enums;
@@ -32,5 +33,10 @@ public static class SpotEndpoint {
                 return await spotService.CreateSpot(eventId, spot);
             }
         );
+        
+        app.MapPost("/events/{eventId}/spots/reserve", 
+           async (Guid eventId, [FromBody] ReserveSpotDto reserveSpotDto, [FromServices] EventService eventService) => {
+            return await eventService.ReserveSpot(reserveSpotDto, eventId);
+        });
     }
 }
