@@ -1,22 +1,12 @@
 using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Domain.Interfaces;
-using Caticket.PartnerAPI.Domain.Interfaces.DTO.Event;
 
 namespace Caticket.PartnerAPI.Core.Services;
 
 public class EventService(IEventRepository eventRepository) {
     private readonly IEventRepository _eventRepository = eventRepository;
 
-    public async Task<Event> CreateEvent(ICreateEventDto createEventDto) {
-        Event e = new() {
-            Name = createEventDto.Name, 
-            Description = createEventDto.Description,
-            Price = createEventDto.Price,
-            Date = DateTime.Parse(createEventDto.Date),
-            CreatedAt = createEventDto.CreatedAt != null 
-                ? DateTime.Parse(createEventDto.CreatedAt) 
-                : DateTime.Now,
-        };
+    public async Task<Event> CreateEvent(Event e) {
         await _eventRepository.CreateAsync(e);
         return e;
     }
@@ -29,21 +19,27 @@ public class EventService(IEventRepository eventRepository) {
         return await _eventRepository.GetAllAsync();
     }
 
-    public async Task Update(IUpdateEventDto updateEventDto) {
-        var e = await _eventRepository.GetByIdAsync(updateEventDto.Id);
+    public async Task<Event> Update(Event updateEvent) {
+        var _ = await _eventRepository.GetByIdAsync(updateEvent.Id) ?? throw new Exception("This event does not exist");
 
         await _eventRepository.UpdateAsync(
-            new() { 
-                Id = updateEventDto.Id,
-                Name = updateEventDto.Name,
-                Description = updateEventDto.Description,
-                CreatedAt = e.CreatedAt,
-                UpdatedAt = DateTime.Now,
-                Price = updateEventDto.Price,
-                Date = DateTime.Parse(updateEventDto.Date),
-            }
+            updateEvent
+            // new() { 
+            //     Id = e.Id,
+            //     Name = updateEvent.Name,
+            //     Description = updateEvent.Description,
+            //     CreatedAt = updateEvent.CreatedAt,
+            //     UpdatedAt = DateTime.Now,
+            //     Price = updateEvent.Price,
+            //     Date = updateEvent.Date,
+            // }
         );
+        return updateEvent;
     } 
+
+    public async Task<Event> GetEventById(Guid eventId) {
+        return await _eventRepository.GetByIdAsync(eventId);
+    }
 
     public async Task Delete(Guid id){
         await _eventRepository.DeleteAsync(id);	

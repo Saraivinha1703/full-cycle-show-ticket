@@ -15,7 +15,7 @@ PATCH http://localhost:5000/events
 Content-Type: application/json
 
 {   
-    "id": "330c50d8-e357-441e-8fa5-d4a1fe1f6258",
+    "id": "504aef7e-be45-41a9-ae73-6d08e7a1946f",
     "name": "bbb",
     "price": 32.99,
     "description": "Some desc",
@@ -27,7 +27,7 @@ DELETE http://localhost:5000/events
 Content-Type: application/json
 
 {   
-    "id": "6f7b91c5-d99a-4d23-b08d-ab749d8394ea"
+    "id": "326dd65a-1a4c-4ed5-9372-75e3aa9ff852"
 }
 
 ###
@@ -42,5 +42,5 @@ POST http://localhost:5000/events/{{eventId}}/spots
 Content-Type: application/json
 
 {
-    "name": "A3"
+    "name": "A2"
 }

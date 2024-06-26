@@ -1,6 +1,8 @@
 using System.Reflection;
 using Caticket.PartnerAPI.Core.Services;
+using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Web.DTO;
+using Caticket.PartnerAPI.Web.DTO.Event;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Caticket.PartnerAPI.Web.Endpoints;
@@ -28,22 +30,57 @@ public static class EventEndpoint {
         
         app.MapPost(
             "/events", 
-            async ([FromBody] CreateEventDto eventDto, [FromServices] EventService eventService) => {
-                return await eventService.CreateEvent(eventDto);
+            async ([FromBody] CreateEventRequest eventDto, [FromServices] EventService eventService) => {
+                Event e = new() {
+                    Name = eventDto.Name, 
+                    Description = eventDto.Description,    
+                    Date = DateTime.Parse(eventDto.Date),
+                    Price = eventDto.Price,
+                };
+
+                var eventResponse = await eventService.CreateEvent(e);
+
+                CreateEventResponse createEventResponse = new(
+                    eventResponse.Id,
+                    eventResponse.Name,
+                    eventResponse.Description,
+                    eventResponse.Date.ToString(),
+                    eventResponse.CreatedAt.ToString(),
+                    eventResponse.Price
+                );
+
+                return createEventResponse;
             }
         );
 
         app.MapPatch(
             "/events", 
-            async ([FromBody] UpdateEventDto updateEventDto, [FromServices] EventService eventService) => {
-                await eventService.Update(updateEventDto);
-                return "event updated!";
+            async ([FromBody] UpdateEventRequest updateEventDto, [FromServices] EventService eventService) => {
+                Event e = new() {
+                    Id = updateEventDto.Id,
+                    Name = updateEventDto.Name, 
+                    Description = updateEventDto.Description,    
+                    Date = DateTime.Parse(updateEventDto.Date),
+                    Price = updateEventDto.Price,
+                };
+
+                var updateResponse = await eventService.Update(e);
+
+                UpdateEventResponse updateEventResponse = new(
+                    updateResponse.Id, 
+                    updateResponse.Name, 
+                    updateResponse.Description, 
+                    updateResponse.Date.ToString(),
+                    updateResponse.Price
+                ); 
+
+                return updateEventResponse;
             }
         );
 
         app.MapDelete(
             "/events", 
-            async ([FromBody] BaseDeleteDto deleteDto, [FromServices] EventService eventService) => {
+            async ([FromBody] BaseDeleteRequest deleteDto, [FromServices] EventService eventService) => {
                 await eventService.Delete(deleteDto.Id);
                 return "event deleted!";
             });
