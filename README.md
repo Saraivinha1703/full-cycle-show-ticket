@@ -1,8 +1,3 @@
-# How this project work
-
-# Clone and Test!
---- Some docker image to run this project ---
-
 # Project Development Idea
 <blockquote>
 <small>
