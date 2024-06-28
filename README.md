@@ -1,3 +1,8 @@
+<!-- 
+# How this project work
+# Clone and Test!
+--- Some docker image to run this project --- -->
+
 # Project Development Idea
 <blockquote>
 <small>
@@ -15,10 +20,10 @@ Tasks:
 - Front-end
 - API Gateway
 
-# Workflow
+<!-- # Workflow
 --- change to a graph ---
 
-front end ---> API Gateway ---> system interface ---> events management system ---> partners API
+front end -> API Gateway -> system interface -> events management system -> partners API -->
 
 # Technologies
 
