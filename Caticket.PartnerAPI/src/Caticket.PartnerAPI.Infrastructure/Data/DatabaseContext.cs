@@ -4,12 +4,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Caticket.PartnerAPI.Infrastructure.Data;
 
-public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options) { 
+public class DatabaseContext : DbContext { 
     // public DbSet<Event> Events { get; set; }
     // public DbSet<ReservationHistory> ReservationHistories { get; set; }
     // public DbSet<Spot> Spots { get; set; }
     // public DbSet<Ticket> Tickets { get; set; }
 
+    public DatabaseContext() {}   
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
+    protected override void OnConfiguring(DbContextOptionsBuilder options) {
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
+        //running on container
+        // var connectionString = "server=database;user=root;password=root;database=api";
+        //running locally
+        var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
+
+        options.UseMySql(
+            connectionString, 
+            serverVersion, 
+            o => o.MigrationsAssembly("Caticket.PartnerAPI.Web")
+        );
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 

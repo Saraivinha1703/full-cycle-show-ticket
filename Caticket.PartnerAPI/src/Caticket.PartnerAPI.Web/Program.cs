@@ -1,6 +1,8 @@
 using Caticket.PartnerAPI.Core.Services;
+using Caticket.PartnerAPI.Infrastructure.Data;
 using Caticket.PartnerAPI.Infrastructure.Services;
 using Caticket.PartnerAPI.Web.Endpoints;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.ConfigureDatabase();
 builder.Services.AddCoreServices();
 
 var app = builder.Build();
+
+using (DatabaseContext dbContext = new() ) {
+    dbContext.Database.Migrate();
+} 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
