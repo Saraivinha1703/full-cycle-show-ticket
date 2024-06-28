@@ -9,13 +9,19 @@ namespace Caticket.PartnerAPI.Infrastructure.Repositories;
 public class SpotRepository(DatabaseContext dbContext) : Repository<Spot>(dbContext), ISpotRepository
 {
     private readonly DatabaseContext _dbContext = dbContext;
-    public async Task<List<Spot>> FindManySpotsByName(List<string> spotsToFind, Guid eventId)
+    public async Task<List<Spot>> FindManySpotsByName(List<string> spotsToFind, Guid eventId, bool trackable = false)
     {
-        var spots = await _dbContext.Set<Spot>()
-            .Where(s => s.EventId == eventId)
-            .Where(s => spotsToFind.Contains(s.Name))
-            .AsNoTracking()
-            .ToListAsync();
+        var spots = trackable 
+            ? await _dbContext.Set<Spot>()
+                .Where(s => s.EventId == eventId)
+                .Where(s => spotsToFind.Contains(s.Name))
+                .AsTracking()
+                .ToListAsync() 
+            : await _dbContext.Set<Spot>()
+                .Where(s => s.EventId == eventId)
+                .Where(s => spotsToFind.Contains(s.Name))
+                .AsTracking()
+                .ToListAsync();
     
             spots.ForEach(spot => {
                 Console.WriteLine("selected: " + spot.Id + " name: " + spot.Name);

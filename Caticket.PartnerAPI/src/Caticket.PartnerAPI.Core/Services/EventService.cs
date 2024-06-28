@@ -1,4 +1,3 @@
-using System.Formats.Asn1;
 using Caticket.PartnerAPI.Core.DTO.Event;
 using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Domain.Enums;
@@ -6,14 +5,28 @@ using Caticket.PartnerAPI.Domain.Interfaces;
 
 namespace Caticket.PartnerAPI.Core.Services;
 
-public class EventService(IEventRepository eventRepository, ISpotRepository spotRepository, IRepository<Ticket> ticketRepository) {
+public class EventService(
+    IEventRepository eventRepository, 
+    ISpotRepository spotRepository, 
+    IRepository<Ticket> ticketRepository,
+    IRepository<ReservationHistory> reservationHistoryRepository,
+    IUnitOfWork unitOfWork
+    ) {
     private readonly IEventRepository _eventRepository = eventRepository;
     private readonly ISpotRepository _spotRepository = spotRepository;
     private readonly IRepository<Ticket> _ticketRepository = ticketRepository;
+    private readonly IRepository<ReservationHistory> _reservationHistoryRepository = reservationHistoryRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+
 
     public async Task<Event> CreateEvent(Event e) {
-        await _eventRepository.CreateAsync(e);
-        return e;
+        try {
+            await _eventRepository.CreateAsync(e);
+            await _unitOfWork.Commit();
+            return e;
+        } catch (Exception ex) {
+            throw new Exception($"Something went wrong while creating the event: {ex.Message}");
+        }
     }
 
     public async Task<IEnumerable<Event>> GetEventByName(string name) {
@@ -25,10 +38,22 @@ public class EventService(IEventRepository eventRepository, ISpotRepository spot
     }
 
     public async Task<Event> Update(Event updateEvent) {
-        var _ = await _eventRepository.GetByIdAsync(updateEvent.Id) ?? throw new Exception("This event does not exist");
+        try {
+            var ev = await _eventRepository.GetByIdAsync(updateEvent.Id, true) ?? throw new Exception("This event does not exist");
 
-        await _eventRepository.UpdateAsync(updateEvent);
-        return updateEvent;
+            ev.Name = updateEvent.Name;
+            ev.Description = updateEvent.Description;
+            ev.Date = updateEvent.Date;
+            ev.CreatedAt = updateEvent.CreatedAt;
+            ev.UpdatedAt = updateEvent.UpdatedAt;
+            ev.Price = updateEvent.Price;
+
+            await _unitOfWork.Commit();
+
+            return ev;
+        } catch(Exception ex) {
+            throw new Exception($"Somthing went wrong while updating the event: {ex.Message}");
+        }
     } 
 
     public async Task<Event> GetEventById(Guid eventId) {
@@ -37,7 +62,7 @@ public class EventService(IEventRepository eventRepository, ISpotRepository spot
 
     public async Task<Tuple<List<string>, List<Ticket>?>> ReserveSpot(ReserveSpotDto reserveSpots, Guid eventId) {
         List<string> messages = [];
-        var spots = await _spotRepository.FindManySpotsByName(reserveSpots.Spots, eventId);
+        var spots = await _spotRepository.FindManySpotsByName(reserveSpots.Spots, eventId, true);
         
         if(spots.Count == 0 || spots == null) {
             messages.Add("No spots found.");
@@ -67,32 +92,49 @@ public class EventService(IEventRepository eventRepository, ISpotRepository spot
             return new(messages, null);
         } else {
             List<Ticket> tickets = [];
+            List<ReservationHistory> reservationHistories = [];
             
             spots.ForEach(s => s.Status = SpotStatus.Reserved);
-            spots.ForEach(s => tickets.Add(
-                new() { 
-                    Email = reserveSpots.Email, 
-                    CreatedAt = DateTime.Now, 
-                    TicketKind = reserveSpots.TicketKind, 
-                    SpotId = s.Id, 
-                }
-            ));
+            spots.ForEach(s => {
+                tickets.Add(
+                    new() { 
+                        Email = reserveSpots.Email, 
+                        CreatedAt = DateTime.Now, 
+                        TicketKind = reserveSpots.TicketKind, 
+                        SpotId = s.Id, 
+                    }
+                );
 
-
-            spots.ForEach(spot => {
-                Console.WriteLine("updating selected: " + spot.Id + "\n name: " + spot.Name + "\n status: " + spot.Status);
+                reservationHistories.Add(
+                    new() { 
+                        Email = reserveSpots.Email, 
+                        CreatedAt = DateTime.Now, 
+                        TicketKind = reserveSpots.TicketKind, 
+                        SpotId = s.Id, 
+                    }
+                );
             });
 
-            await _ticketRepository.CreateRangeAsync(tickets);
-            await _spotRepository.UpdateRangeAsync(spots);
-            
-            messages.Add("Spots reserved.");
+            try {
+                await _ticketRepository.CreateRangeAsync(tickets);
+                await _reservationHistoryRepository.CreateRangeAsync(reservationHistories);
 
-            return new(messages, tickets);
+                await _unitOfWork.Commit();
+                messages.Add("Spots reserved.");
+
+                return new(messages, tickets);
+            } catch(Exception e) {
+                throw new Exception($"Something went wrong while reservation spots: {e.Message}");
+            }
         }
     }
 
     public async Task Delete(Guid id){
-        await _eventRepository.DeleteAsync(id);	
+        try {
+            await _eventRepository.DeleteAsync(id);	
+            await _unitOfWork.Commit();
+        } catch(Exception ex) {
+            throw new Exception($"Something wen wrong while deleting the event: {ex.Message}");
+        }
     }
 }

@@ -13,13 +13,11 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
     public virtual async Task CreateAsync(T entity)
     {
         await _dbContext.Set<T>().AddAsync(entity);
-        await SaveAsync();
     }
     
     public virtual async Task CreateRangeAsync(List<T> entities)
     {
         await _dbContext.Set<T>().AddRangeAsync(entities);
-        await SaveAsync();
     }
 
     public virtual async Task DeleteAsync(Guid id)
@@ -27,7 +25,6 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
         T entity = await GetByIdAsync(id);
 
         _dbContext.Set<T>().Remove(entity);
-        await SaveAsync();
     }
 
     public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, bool? queryable = false, bool? trackable = false)
@@ -76,19 +73,15 @@ public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> 
             .FirstOrDefaultAsync() 
             ?? throw new Exception("Not able to return a entity for this Id");
 
-    public virtual async Task<int> SaveAsync() => await _dbContext.SaveChangesAsync();
-
-    public virtual async Task UpdateAsync(T entity)
-    {
-        _dbContext.Set<T>().Update(entity);
-        await SaveAsync();
-    }
+    // public virtual void Update(T entity)
+    // {
+    //     _dbContext.Set<T>().Update(entity);
+    // }
     
-    public virtual async Task UpdateRangeAsync(List<T> entities)
-    {
-        _dbContext.Set<T>().UpdateRange(entities);
-        await SaveAsync();
-    }
+    // public virtual void UpdateRange(List<T> entities)
+    // {
+    //     _dbContext.Set<T>().UpdateRange(entities);
+    // }
 
     
     private bool disposed = false;

@@ -1,6 +1,7 @@
 using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Domain.Interfaces;
 using Caticket.PartnerAPI.Infrastructure.Data;
+using Caticket.PartnerAPI.Infrastructure.Interfaces;
 using Caticket.PartnerAPI.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,5 +31,6 @@ public static class InfrastructureConfiguration {
         services.AddScoped<ISpotRepository, SpotRepository>();
         services.AddScoped<IRepository<ReservationHistory>, ReservationHistoryRepository>();
         services.AddScoped<IRepository<Ticket>, TicketRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }
