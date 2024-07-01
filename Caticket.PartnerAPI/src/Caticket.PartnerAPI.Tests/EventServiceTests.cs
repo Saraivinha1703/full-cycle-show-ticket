@@ -1,7 +1,10 @@
+using Caticket.PartnerAPI.Core.DTO.Event;
 using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Domain.Entities;
+using Caticket.PartnerAPI.Domain.Enums;
 using Caticket.PartnerAPI.Domain.Interfaces;
 using FakeItEasy;
+using Shouldly;
 
 namespace Caticket.PartnerAPI.Tests;
 
@@ -34,7 +37,17 @@ public class EventServiceTests
         var result = await _eventService.CreateEvent(ev);
 
         //Assert - check if the result returned is the one expected
-        Assert.Equal(ev, result);
-        Assert.Null(result.UpdatedAt);
+        result.ShouldBe(ev);
+        result.UpdatedAt.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task EventService_ReserveSpot_SpotsReserved() {
+        var reserveSpotDto = new ReserveSpotDto(["A1",  "B2"], "some@email.com", TicketKind.Full);
+
+        var result = await _eventService.ReserveSpot(reserveSpotDto, Guid.NewGuid());
+
+        result.ShouldBeOfType<Tuple<List<string>, List<Ticket>?>>();
+        result.Item1.ShouldAllBe(i => string.IsNullOrEmpty(i));
     }
 }
