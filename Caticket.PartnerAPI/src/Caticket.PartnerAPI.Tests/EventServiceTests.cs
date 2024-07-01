@@ -1,12 +1,22 @@
 using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Domain.Entities;
-using Xunit;
+using Caticket.PartnerAPI.Domain.Interfaces;
+using FakeItEasy;
 
 namespace Caticket.PartnerAPI.Tests;
 
-public class EventServiceTests(EventService eventService)
+public class EventServiceTests
 {
-    private readonly EventService _eventService = eventService;
+    private readonly EventService _eventService;
+
+    public EventServiceTests() {
+        var eventRepository = A.Fake<IEventRepository>();
+        var spotRepository = A.Fake<ISpotRepository>();
+        var ticketRepository = A.Fake<IRepository<Ticket>>();
+        var reservationHistoryRepository = A.Fake<IRepository<ReservationHistory>>();
+        var unitOfWork = A.Fake<IUnitOfWork>();
+        _eventService = new EventService(eventRepository, spotRepository, ticketRepository, reservationHistoryRepository, unitOfWork);
+    }
 
     [Fact]
     public async Task EventService_CreateEvent_EventObject()
@@ -25,5 +35,6 @@ public class EventServiceTests(EventService eventService)
 
         //Assert - check if the result returned is the one expected
         Assert.Equal(ev, result);
+        Assert.Null(result.UpdatedAt);
     }
 }
