@@ -61,3 +61,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
+
+#export configuration to yaml (the host must be defined at /etc/hosts)
+#podman run --add-host host.podman.internal:host-gateway --network host kong/deck:v1.37.0 gateway dump --kong-addr http://host.podman.internal:8001/
