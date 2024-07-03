@@ -15,7 +15,7 @@ public class DatabaseContext : DbContext {
     protected override void OnConfiguring(DbContextOptionsBuilder options) {
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
         //running on container
-        // var connectionString = "server=database;user=root;password=root;database=api";
+        // var connectionString = "server=partner-db;user=root;password=root;database=api";
         //running locally
         var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
 

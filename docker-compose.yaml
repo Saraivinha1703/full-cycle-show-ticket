@@ -1,5 +1,5 @@
 services:
-  database:
+  partner-db:
     image: mysql:8.0.30-debian
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -7,10 +7,25 @@ services:
     ports:
       - 3307:3306
     #volumes:
-    #  - ./.docker/dbdata:/var/lib/mysql
-  app:
+    #  - ./.docker/partner-dbdata:/var/lib/mysql
+  partner-app:
     build: ./Caticket.PartnerAPI
     ports:
       - 5000:5000
     volumes:
       - ./Caticket.PartnerAPI:/home/dotnet/app
+  sales-db:
+    image: mysql:8.0.30-debian
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: api
+    ports:
+      - 3308:3306
+    #volumes:
+    #  - ./.docker/sales-dbdata:/var/lib/mysql
+  sales-app:
+    build: ./Caticket.SalesAPI
+    ports:
+      - 5001:5001
+    volumes:
+      - ./Caticket.SalesAPI:/home/dotnet/app
