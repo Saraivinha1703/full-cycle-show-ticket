@@ -2,6 +2,7 @@ using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Infrastructure.Data;
 using Caticket.PartnerAPI.Infrastructure.Services;
 using Caticket.PartnerAPI.Web.Endpoints;
+using Caticket.PartnerAPI.Web.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

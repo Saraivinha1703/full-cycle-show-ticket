@@ -1,6 +1,7 @@
 using Caticket.PartnerAPI.Core.DTO.Event;
 using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Domain.Enums;
+using Caticket.PartnerAPI.Domain.Exceptions;
 using Caticket.PartnerAPI.Domain.Interfaces;
 
 namespace Caticket.PartnerAPI.Core.Services;
@@ -39,7 +40,7 @@ public class EventService(
 
     public async Task<Event> Update(Event updateEvent) {
         try {
-            var ev = await _eventRepository.GetByIdAsync(updateEvent.Id, true) ?? throw new Exception("This event does not exist");
+            var ev = await _eventRepository.GetByIdAsync(updateEvent.Id, true);
 
             ev.Name = updateEvent.Name;
             ev.Description = updateEvent.Description;
@@ -51,8 +52,8 @@ public class EventService(
             await _unitOfWork.Commit();
 
             return ev;
-        } catch(Exception ex) {
-            throw new Exception($"Somthing went wrong while updating the event: {ex.Message}");
+        }  catch(Exception) {
+            throw new IdNotFoundException("Something went wrong while updating the event");
         }
     } 
 
@@ -123,8 +124,8 @@ public class EventService(
                 messages.Add("Spots reserved.");
 
                 return new(messages, tickets);
-            } catch(Exception e) {
-                throw new Exception($"Something went wrong while reservation spots: {e.Message}");
+            } catch(Exception) {
+                throw new IdNotFoundException("Something went wrong while reservation spots");
             }
         }
     }
@@ -133,8 +134,9 @@ public class EventService(
         try {
             await _eventRepository.DeleteAsync(id);	
             await _unitOfWork.Commit();
-        } catch(Exception ex) {
-            throw new Exception($"Something wen wrong while deleting the event: {ex.Message}");
+        } catch (Exception)
+        {
+            throw new IdNotFoundException("Something went wrong while deleting the event");
         }
     }
 }
