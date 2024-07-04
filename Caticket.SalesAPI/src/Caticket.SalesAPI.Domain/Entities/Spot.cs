@@ -1,4 +1,5 @@
-using Caticket.SalesAPI.Domain.Types;
+
+using Caticket.SalesAPI.Domain.Enumerators;
 
 namespace Caticket.SalesAPI.Domain.Entities;
 

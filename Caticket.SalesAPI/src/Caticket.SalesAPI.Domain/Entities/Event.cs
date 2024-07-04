@@ -1,4 +1,4 @@
-﻿using Caticket.SalesAPI.Domain.Types;
+﻿using Caticket.SalesAPI.Domain.Enumerators;
 
 namespace Caticket.SalesAPI.Domain.Entities;
 
@@ -18,7 +18,6 @@ public class Event(
     public string Location { get; set; } = location;
     public string Organization { get; set; } = organization;
     public Rating Rating { get; set; } = rating ?? Rating.G;
-    //G, PG, PG-13, R, NC-17
     public DateTime Date { get; set; } = date;
     public string ImageURL { get; set; } = imageURL;
     public int Capacity { get; set; } = capacity;
@@ -27,5 +26,5 @@ public class Event(
     public int PartnerId { get; set; } = partnerId;
 
     public ICollection<Spot>? Spots { get; set; }
-    //public ICollection<Ticket> Tickets { get; set; }
+    public ICollection<Ticket>? Tickets { get; set; }
 }
