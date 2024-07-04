@@ -1,7 +1,7 @@
-// using Caticket.PartnerAPI.Domain.Interfaces;
-// using Caticket.PartnerAPI.Infrastructure.Data;
+// using Caticket.SalesAPI.Domain.Interfaces;
+// using Caticket.SalesAPI.Infrastructure.Data;
 
-// namespace Caticket.PartnerAPI.Infrastructure.Interfaces;
+// namespace Caticket.SalesAPI.Infrastructure.Interfaces;
 
 // public class UnitOfWork(DatabaseContext dbContext) : IUnitOfWork
 // {

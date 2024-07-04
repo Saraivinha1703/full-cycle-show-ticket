@@ -1,10 +1,10 @@
 
 // using System.Linq.Expressions;
-// using Caticket.PartnerAPI.Domain.Interfaces;
-// using Caticket.PartnerAPI.Infrastructure.Data;
+// using Caticket.SalesAPI.Domain.Interfaces;
+// using Caticket.SalesAPI.Infrastructure.Data;
 // using Microsoft.EntityFrameworkCore;
 
-// namespace Caticket.PartnerAPI.Infrastructure.Interfaces;
+// namespace Caticket.SalesAPI.Infrastructure.Interfaces;
 
 // public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> where T : class, IBaseEntity
 // {
