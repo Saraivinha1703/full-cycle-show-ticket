@@ -12,4 +12,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Caticket.SalesAPI.Core\Caticket.SalesAPI.Core.csproj" />
+    <ProjectReference Include="..\Caticket.SalesAPI.Domain\Caticket.SalesAPI.Domain.csproj" />
+    <ProjectReference Include="..\Caticket.SalesAPI.Infrastructure\Caticket.SalesAPI.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
