@@ -1,7 +1,5 @@
 using System.Linq.Expressions;
-using Caticket.SalesAPI.Domain.Interfaces;
-
-namespace Caticket.PartnerAPI.Domain.Interfaces;
+namespace Caticket.SalesAPI.Domain.Interfaces;
 
 public interface IRepository<T> : IDisposable where T : IBaseEntity {
     Task CreateAsync(T entity);
