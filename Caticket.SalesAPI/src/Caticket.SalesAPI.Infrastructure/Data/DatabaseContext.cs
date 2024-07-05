@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Caticket.SalesAPI.Infrastructure.Data;
 
-public class DatabaseContext
+public class DatabaseContext : DbContext
 {
     
 }
