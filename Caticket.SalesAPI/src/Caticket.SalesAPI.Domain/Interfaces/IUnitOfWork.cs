@@ -1,4 +1,4 @@
-namespace Caticket.PartnerAPI.Domain.Interfaces;
+namespace Caticket.SalesAPI.Domain.Interfaces;
 
 public interface IUnitOfWork {
     Task<bool> Commit();
