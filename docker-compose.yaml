@@ -30,3 +30,9 @@ services:
       - 5002:5000
     volumes:
       - ./Caticket.SalesAPI:/home/dotnet/app
+  front-end:
+    build: ./caticket
+    ports:
+      - 3000:3000
+    volumes:
+      - ./caticket:/home/next/app
