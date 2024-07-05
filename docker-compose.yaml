@@ -12,6 +12,7 @@ services:
     build: ./Caticket.PartnerAPI
     ports:
       - 5000:5000
+      - 5001:5001
     volumes:
       - ./Caticket.PartnerAPI:/home/dotnet/app
   sales-db:
@@ -26,6 +27,6 @@ services:
   sales-app:
     build: ./Caticket.SalesAPI
     ports:
-      - 5001:5001
+      - 5002:5000
     volumes:
       - ./Caticket.SalesAPI:/home/dotnet/app
