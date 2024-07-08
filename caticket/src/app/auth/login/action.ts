@@ -1,3 +1,7 @@
+"use server";
+
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z, ZodIssue } from "zod";
 
 const schema = z.object({
@@ -18,7 +22,8 @@ export async function Login(
 
   if (res.success) {
     console.log(res.data);
-    return { errors: [] };
+    cookies().set("isLoggedIn", "true");
+    redirect("/dashboard");
   } else {
     return { errors: res.error.issues };
   }

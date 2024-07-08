@@ -10,5 +10,5 @@ export default function AppLayout({
 
   if (!isLogged) redirect("/auth/login");
 
-  return <div>{children}</div>;
+  return <div className="h-[calc(100%-4rem)]">{children}</div>;
 }

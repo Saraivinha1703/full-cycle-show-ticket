@@ -12,7 +12,7 @@ export function LoginForm() {
   const passwordErrors = state.errors.filter((i) => i.path[0] === "password");
 
   return (
-    <main className="w-full h-full flex justify-center items-center">
+    <main className="w-full h-[calc(100%-4rem)] flex justify-center items-center">
       <form
         className="transition-all duration-300 flex flex-col gap-6 w-full md:w-3/4 lg:w-1/2 border border-input rounded-lg p-4 hover:shadow-md hover:shadow-black/10"
         action={formAction}
@@ -49,7 +49,10 @@ export function LoginForm() {
             name="password"
           />
           {passwordErrors.map((i, idx) => (
-            <p key={idx} className="text-destructive text-sm font-semibold">
+            <p
+              key={idx}
+              className="pl-4 text-destructive text-sm font-semibold"
+            >
               {i.message}
             </p>
           ))}

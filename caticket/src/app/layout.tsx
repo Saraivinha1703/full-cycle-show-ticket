@@ -1,6 +1,7 @@
+import { Navbar } from "@/components/navbar";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
@@ -18,7 +19,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.ico" sizes="any" />
       </head>
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <Navbar />
+        <div className="h-full flex flex-col justify-end">{children}</div>
+      </body>
     </html>
   );
 }
