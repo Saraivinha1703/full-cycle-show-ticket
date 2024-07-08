@@ -6,9 +6,9 @@ export default function AppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isLogged = cookies().get("isLoggedIn");
+  const hasToken = cookies().get("token");
 
-  if (!isLogged) redirect("/auth/login");
+  if (!hasToken) redirect("/auth/login");
 
   return <div className="h-[calc(100%-4rem)]">{children}</div>;
 }

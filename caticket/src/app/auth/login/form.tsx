@@ -28,13 +28,14 @@ export function LoginForm() {
             )}
             name="email"
           />
+
           {emailErrors.map((i, idx) => (
-            <p
+            <span
               key={idx}
               className="pl-4 text-destructive text-sm font-semibold"
             >
               {i.message}
-            </p>
+            </span>
           ))}
         </div>
 
@@ -49,12 +50,12 @@ export function LoginForm() {
             name="password"
           />
           {passwordErrors.map((i, idx) => (
-            <p
+            <span
               key={idx}
               className="pl-4 text-destructive text-sm font-semibold"
             >
               {i.message}
-            </p>
+            </span>
           ))}
         </div>
 

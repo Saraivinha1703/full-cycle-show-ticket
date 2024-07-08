@@ -1,7 +1,8 @@
-import { Navbar } from "@/components/navbar";
 import "./globals.css";
+import { Navbar } from "@/components/navbar";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
@@ -19,9 +20,17 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.ico" sizes="any" />
       </head>
+
       <body className={poppins.className}>
-        <Navbar />
-        <div className="h-full flex flex-col justify-end">{children}</div>
+        <ThemeProvider
+          attribute="class"
+          enableSystem
+          enableColorScheme
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <div className="h-full flex flex-col justify-end">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { Logout } from "@/lib/actions";
 import { cookies } from "next/headers";
+import { ThemeSwitcher } from "../theme-switcher";
 
 export function Navbar() {
   const isLoggedIn = cookies().get("isLoggedIn");
@@ -12,13 +13,16 @@ export function Navbar() {
         <Image alt="logo" src="/logo.ico" width={35} height={28} />
         <h1 className="text-3xl font-light tracking-wide">Caticket</h1>
       </div>
-      {isLoggedIn && (
-        <form>
-          <Button formAction={Logout} variant="ghost">
-            Logout
-          </Button>
-        </form>
-      )}
+      <div className="flex gap-2">
+        {isLoggedIn && (
+          <form>
+            <Button formAction={Logout} variant="ghost">
+              Logout
+            </Button>
+          </form>
+        )}
+        <ThemeSwitcher />
+      </div>
     </nav>
   );
 }
