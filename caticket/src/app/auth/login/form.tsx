@@ -5,11 +5,19 @@ import { Input } from "@/components/ui/input";
 import { useFormState } from "react-dom";
 import { Login } from "./action";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export function LoginForm() {
+  const [isMounted, setIsMounted] = useState(false);
   const [state, formAction] = useFormState(Login, { errors: [] });
   const emailErrors = state.errors.filter((i) => i.path[0] === "email");
   const passwordErrors = state.errors.filter((i) => i.path[0] === "password");
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return;
 
   return (
     <main className="w-full h-[calc(100%-4rem)] flex justify-center items-center">
