@@ -16,7 +16,7 @@
       --primary: 43.26 96.41% 56.27%;
       --primary-foreground: 0 0% 98%;
 
-      --secondary: 240 4.8% 95.9%;
+      --secondary: 24.58 94.98% 53.14%;
       --secondary-foreground: 240 5.9% 10%;
 
       --muted: 240 4.8% 95.9%;
@@ -48,7 +48,7 @@
       --primary: 43.26 96.41% 56.27%;
       --primary-foreground: 240 5.9% 10%;
 
-      --secondary: 240 3.7% 15.9%;
+      --secondary: 24.58 94.98% 53.14%;
       --secondary-foreground: 0 0% 98%;
 
       --muted: 240 3.7% 15.9%;
@@ -64,8 +64,28 @@
       --input: 240 3.7% 15.9%;
       --ring: 240 4.9% 83.9%;
     }
-  }
 
+    .scrollbar::-webkit-scrollbar {
+      width: 0.3rem;
+    }
+    
+    /* Track */
+    .scrollbar::-webkit-scrollbar-track {
+      background: hsl(var(--accent)); 
+    }
+     
+    /* Handle */
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: hsl(var(--primary)); 
+      border-radius: 10rem;
+    }
+    
+    /* Handle on hover */
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--primary) / 0.7); 
+    }
+  }
+  
   @layer base {
     * {
       @apply border-border;

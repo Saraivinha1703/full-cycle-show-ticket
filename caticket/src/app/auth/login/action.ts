@@ -25,7 +25,7 @@ export async function Login(
 
   if (res.success) {
     console.log(res.data);
-    //call api
+    //call api - password should be encrypted with RSA key
     const token = await new SignJWT({
       email: res.data.email,
       name: "test",
