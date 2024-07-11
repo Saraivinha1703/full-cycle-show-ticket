@@ -35,9 +35,9 @@ front end -> API Gateway -> system interface -> events management system -> part
 # Development Order
 
 - Partners API <small><small>`Microservice with C#`</small></small>
-- API Gateway <small><small>`Kong`</small></small>
 - Ticket management system <small><small>`Microservice with C#`</small></small>
 - Front-end <small><small>`Next.js`</small></small>
+- API Gateway <small><small>`Kong`</small></small>
 <br/>
 <br/>
 <blockquote><b>NOTE:</b> All the mentions of the word <i>'Partner'</i> refers to the entity that is emiting and selling this tickets, and they are considered <i>partners</i> of this selling ticket platform.</blockquote>
