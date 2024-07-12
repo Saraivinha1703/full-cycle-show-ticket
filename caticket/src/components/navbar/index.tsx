@@ -11,11 +11,11 @@ export function Navbar() {
 
   async function navigateToLogIn() {
     "use server";
-    redirect("/auth/login")
+    redirect("/auth/login");
   }
 
   return (
-    <nav className="h-16 p-4 border-b border-input w-full flex justify-between fixed top-0">
+    <nav className="h-16 p-4 border-b border-input w-full flex justify-between backdrop-blur supports-[backdrop-filter]:bg-background/70 bg-background/95 fixed top-0">
       <Link href="/" className="flex gap-2 h-full justify-center items-center">
         <Image alt="logo" src="/logo.ico" width={35} height={28} />
         <h1 className="text-3xl font-light tracking-wide">Caticket</h1>
@@ -27,7 +27,7 @@ export function Navbar() {
               Log In
             </Button>
           </form>
-          ) : (
+        ) : (
           <form action={Logout}>
             <Button type="submit" variant="ghost">
               Logout
