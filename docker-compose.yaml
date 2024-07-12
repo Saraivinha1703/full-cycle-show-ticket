@@ -42,3 +42,8 @@ services:
       - 3000:3000
     volumes:
       - ./caticket:/home/next/app
+    depends_on:
+      sales-app:
+        condition: service_healthy
+      partner-app:
+        condition: service_healthy
