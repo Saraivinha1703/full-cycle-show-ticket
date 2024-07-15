@@ -1,4 +1,4 @@
-using Caticket.PartnerAPI.Domain.Interfaces;
+using Caticket.SalesAPI.Domain.Interfaces;
 using Caticket.SalesAPI.Core.Exceptions.Spot;
 using Caticket.SalesAPI.Domain.Entities;
 using Caticket.SalesAPI.Domain.Enumerators;
