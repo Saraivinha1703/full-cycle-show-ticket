@@ -2,8 +2,8 @@ services:
   partner-db:
     image: mysql:8.0.30-debian
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: api
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=api
     ports:
       - 3307:3306
     #volumes:
@@ -22,9 +22,10 @@ services:
 
   sales-db:
     image: mysql:8.0.30-debian
+    user: root
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: api
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=api
     ports:
       - 3308:3306
     #volumes:
@@ -32,9 +33,10 @@ services:
     
   auth-db:
     image: mysql:8.0.30-debian
+    user: root
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: auth
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=auth
     ports:
       - 3309:3306
     #volumes:
