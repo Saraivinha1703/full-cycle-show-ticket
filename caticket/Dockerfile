@@ -3,8 +3,8 @@ FROM node:20-slim
 WORKDIR /home/next/app
 COPY . .
 
-RUN yarn
+RUN yarn install
 
-RUN yarn build
+EXPOSE 3000
 
-RUN yarn start
+CMD yarn build && yarn start

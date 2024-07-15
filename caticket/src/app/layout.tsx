@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import type { Metadata } from "next";
-import { Monoton, Poiret_One, Poppins, Syncopate } from "next/font/google";
+import { Monoton, Poppins, Syncopate } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Footer } from "@/components/footer";
 
