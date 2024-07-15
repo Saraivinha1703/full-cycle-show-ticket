@@ -9,6 +9,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -16,6 +20,7 @@
     <ProjectReference Include="..\Caticket.SalesAPI.Core\Caticket.SalesAPI.Core.csproj" />
     <ProjectReference Include="..\Caticket.SalesAPI.Domain\Caticket.SalesAPI.Domain.csproj" />
     <ProjectReference Include="..\Caticket.SalesAPI.Infrastructure\Caticket.SalesAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\Caticket.SalesAPI.Identity\Caticket.SalesAPI.Identity.csproj" />
   </ItemGroup>
 
 </Project>
