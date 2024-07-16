@@ -1,1 +1,9 @@
-POST http://localhost:5107/login
+POST http://localhost:5107/register/partner
+Content-Type: application/json
+
+{
+    "email": "",
+    "name": "",
+    "password": "",
+    "confirmPassword": ""
+}

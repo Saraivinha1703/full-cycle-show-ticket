@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Caticket.SalesAPI.Domain\Caticket.SalesAPI.Domain.csproj" />
     <ProjectReference Include="..\Caticket.SalesAPI.Infrastructure\Caticket.SalesAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\Caticket.SalesAPI.Identity\Caticket.SalesAPI.Identity.csproj" />
+    <ProjectReference Include="..\Caticket.SalesAPI.Application\Caticket.SalesAPI.Application.csproj" />
   </ItemGroup>
 
 </Project>
