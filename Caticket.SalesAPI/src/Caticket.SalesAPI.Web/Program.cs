@@ -1,5 +1,6 @@
 using Caticket.SalesAPI.Web.Middlewares;
 using Caticket.SalesAPI.Identity.Services;
+using Caticket.SalesAPI.Web.Endpoints.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.ConfigureIdentity();
+builder.Services.ConfigureIdentity(builder.Configuration);
 
 var app = builder.Build();
 
@@ -22,5 +23,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.MapUserEndpoints();
 
 app.Run();
