@@ -1,6 +1,1 @@
-@Caticket.SalesAPI.Web_HostAddress = http://localhost:5107
-
-GET {{Caticket.SalesAPI.Web_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
+POST http://localhost:5107/login
