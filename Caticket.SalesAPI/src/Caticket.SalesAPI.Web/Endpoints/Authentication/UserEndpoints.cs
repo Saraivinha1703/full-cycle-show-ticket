@@ -3,6 +3,7 @@ using Caticket.SalesAPI.Application.DTOs.Request;
 using Caticket.SalesAPI.Application.Interfaces.Services;
 using Caticket.SalesAPI.Application.DTOs.Response;
 using Caticket.SalesAPI.Web.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Caticket.SalesAPI.Web.Endpoints.Authentication;
 
@@ -23,7 +24,13 @@ public static class UserEndpoints {
             }
         ).AddEndpointFilter<ValidationFilter<UserSignUpRequest>>();
         
-        app.MapPost("/register/user", () => {return "common user";});
+        app.MapGet(
+            "/test", 
+            [Authorize] 
+            () => {
+                return "test";
+            }
+        );
 
         app.MapPost(
             "/login", 

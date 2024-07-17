@@ -78,5 +78,7 @@ public static class IdentityConfiguration {
         }).AddJwtBearer(options => {
             options.TokenValidationParameters = tokenValidationParameters;
         });
+
+        services.AddAuthorization();
     }
 }

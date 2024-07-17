@@ -16,3 +16,6 @@ Content-Type: application/json
     "email": "teste@teste.com",
     "password": "Teste@1"
 }
+
+###
+GET http://localhost:5107/test
