@@ -26,7 +26,9 @@ public class UserSignUpValidator : AbstractValidator<UserSignUpRequest> {
             .Must(s => s.Any(char.IsUpper))
             .WithMessage("The password must have upper case letter.")
             .Must(s => s.Any(char.IsLower))
-            .WithMessage("The password must have lower case letter.");
+            .WithMessage("The password must have lower case letter.")
+            .Must(s => s.Any(c => !char.IsLetterOrDigit(c)))
+            .WithMessage("The password must have a special character.");
 
         RuleFor(x => x.ConfirmPassword)
             .Matches(y => y.Password)

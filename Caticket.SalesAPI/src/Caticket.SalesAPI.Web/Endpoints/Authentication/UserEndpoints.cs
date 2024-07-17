@@ -14,7 +14,7 @@ public static class UserEndpoints {
                 [FromBody] UserSignUpRequest userDto, 
                 [FromServices] IIdentityService identityService
             ) => {
-                var result = await identityService.SignUpAsync(userDto);
+                UserSignUpResponse result = await identityService.SignUpAsync(userDto);
 
                 if(!result.Success)
                     return Results.BadRequest(result);
