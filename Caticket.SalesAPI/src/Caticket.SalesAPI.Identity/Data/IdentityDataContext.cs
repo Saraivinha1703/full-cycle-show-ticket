@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace Caticket.SalesAPI.Identity.Data;
 
-public class IdentityDataContext : IdentityDbContext<User> {
+public class IdentityDataContext : IdentityDbContext<User, Role, string> {
     public IdentityDataContext(DbContextOptions<IdentityDataContext> options) : base(options) {}
     public IdentityDataContext() {}
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string connectionString = "server=localhost;user=root;password=root;database=auth;port=3309";

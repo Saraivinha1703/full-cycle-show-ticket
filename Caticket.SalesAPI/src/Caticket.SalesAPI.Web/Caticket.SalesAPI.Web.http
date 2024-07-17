@@ -2,20 +2,22 @@ POST http://localhost:5107/register/partner
 Content-Type: application/json
 
 {
-    "email": "teste@teste.com",
+    "email": "Teste@Teste.com",
     "name": "Teste",
     "password": "Teste@1",
     "confirmPassword": "Teste@1"
 }
 
 ###
+# @name login 
 POST http://localhost:5107/login
 Content-Type: application/json
 
 {
-    "email": "teste@teste.com",
-    "password": "Teste@1"
+    "email": "Partner@Partner.com",
+    "password": "Partner@1"
 }
 
 ###
 GET http://localhost:5107/test
+Authorization: Bearer {{ login.response.body.token }}

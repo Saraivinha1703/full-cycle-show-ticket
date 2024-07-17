@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Caticket.SalesAPI.Identity.Constants;
+using Microsoft.AspNetCore.Builder;
 
 namespace Caticket.SalesAPI.Identity.Services;
 
@@ -20,14 +24,14 @@ public static class IdentityConfiguration {
     public static void ConfigureIdentity(this IServiceCollection services, IConfiguration configuration) {
         services.AddDbContext<IdentityDataContext>();
 
-        services.AddIdentity<User, IdentityRole>()
+        services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<IdentityDataContext>()
             .AddDefaultTokenProviders();
 
         services.AddScoped<IIdentityService, IdentityService>();
 
         using IdentityDataContext dbContext = new();
-        dbContext.Database.Migrate();
+            dbContext.Database.Migrate();
 
         //JWT config
         IConfigurationSection jwtAppSettingsOptions = configuration.GetSection(nameof(JwtOptions));
@@ -56,29 +60,32 @@ public static class IdentityConfiguration {
             options.Password.RequiredLength = 6;
         });
 
-        TokenValidationParameters tokenValidationParameters = new() {
-            ValidateIssuer = true,
-            ValidIssuer = issuer,
-
-            ValidateAudience = true,
-            ValidAudience = audience,
-
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = securityKey,
-
-            RequireExpirationTime = true,
-            ValidateLifetime = true,
-
-            ClockSkew = TimeSpan.Zero,
-        };
-
         services.AddAuthentication(options => {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options => {
-            options.TokenValidationParameters = tokenValidationParameters;
+            options.TokenValidationParameters = new() {
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+
+                ValidateAudience = true,
+                ValidAudience = audience,
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = securityKey,
+
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero,
+            };
         });
 
         services.AddAuthorization();
+    }
+
+    public static void UseIdentity(this WebApplication app) {
+        app.UseAuthentication();
+        app.UseAuthorization();
     }
 }

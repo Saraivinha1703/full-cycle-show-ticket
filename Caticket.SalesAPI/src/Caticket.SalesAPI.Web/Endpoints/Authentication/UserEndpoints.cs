@@ -4,6 +4,7 @@ using Caticket.SalesAPI.Application.Interfaces.Services;
 using Caticket.SalesAPI.Application.DTOs.Response;
 using Caticket.SalesAPI.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
+using Caticket.SalesAPI.Identity.Constants;
 
 namespace Caticket.SalesAPI.Web.Endpoints.Authentication;
 
@@ -11,6 +12,21 @@ public static class UserEndpoints {
     public static void MapUserEndpoints(this WebApplication app) {
         app.MapPost(
             "/register/partner", 
+            async (
+                [FromBody] UserSignUpRequest userDto, 
+                [FromServices] IIdentityService identityService
+            ) => {
+                UserSignUpResponse result = await identityService.SignUpAsync(userDto, true);
+
+                if(!result.Success)
+                    return Results.BadRequest(result);
+
+                return Results.Ok(result);
+            }
+        ).AddEndpointFilter<ValidationFilter<UserSignUpRequest>>();
+
+        app.MapPost(
+            "/register/user", 
             async (
                 [FromBody] UserSignUpRequest userDto, 
                 [FromServices] IIdentityService identityService
@@ -26,7 +42,7 @@ public static class UserEndpoints {
         
         app.MapGet(
             "/test", 
-            [Authorize] 
+            [Authorize]
             () => {
                 return "test";
             }

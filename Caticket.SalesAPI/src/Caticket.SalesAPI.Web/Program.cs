@@ -30,8 +30,7 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseIdentity();
 
 app.MapUserEndpoints();
 

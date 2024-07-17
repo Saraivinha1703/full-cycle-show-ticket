@@ -4,6 +4,7 @@ using Caticket.SalesAPI.Application.DTOs.Request;
 using Caticket.SalesAPI.Application.DTOs.Response;
 using Caticket.SalesAPI.Application.Interfaces.Services;
 using Caticket.SalesAPI.Identity.Configurations;
+using Caticket.SalesAPI.Identity.Constants;
 using Caticket.SalesAPI.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -20,7 +21,7 @@ public class IdentityService(
     private readonly UserManager<User> _userManager = userManager;
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public async Task<UserSignUpResponse> SignUpAsync(UserSignUpRequest userDto)
+    public async Task<UserSignUpResponse> SignUpAsync(UserSignUpRequest userDto, bool isPartner = false)
     {
         User user = new() {
             UserName = userDto.Email,
@@ -30,9 +31,13 @@ public class IdentityService(
         };
 
         IdentityResult result = await _userManager.CreateAsync(user, userDto.Password);
-
-        if(result.Succeeded) 
+        
+        if(result.Succeeded) {
             await _userManager.SetLockoutEnabledAsync(user, false);
+
+            if(isPartner)
+                await _userManager.AddToRoleAsync(user, Roles.Partner);
+        } 
 
         UserSignUpResponse userSignUpResponse = new(result.Succeeded);
 
