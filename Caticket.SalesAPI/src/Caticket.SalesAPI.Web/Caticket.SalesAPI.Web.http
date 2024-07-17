@@ -7,3 +7,12 @@ Content-Type: application/json
     "password": "Teste@1",
     "confirmPassword": "Teste@1"
 }
+
+###
+POST http://localhost:5107/login
+Content-Type: application/json
+
+{
+    "email": "teste@teste.com",
+    "password": "Teste@1"
+}
