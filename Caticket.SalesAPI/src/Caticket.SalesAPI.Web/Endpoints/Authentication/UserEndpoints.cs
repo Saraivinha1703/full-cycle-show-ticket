@@ -24,6 +24,20 @@ public static class UserEndpoints {
         ).AddEndpointFilter<ValidationFilter<UserSignUpRequest>>();
         
         app.MapPost("/register/user", () => {return "common user";});
-        app.MapPost("/login", () => {return "login";});
+
+        app.MapPost(
+            "/login", 
+            async (
+                [FromBody] UserLoginRequest userDto, 
+                [FromServices] IIdentityService identityService
+            ) => {
+                UserLoginResponse result = await identityService.LoginAsync(userDto);
+
+                if(!result.Success)
+                    return Results.BadRequest(result);
+
+                return Results.Ok(result);
+            }
+        ).AddEndpointFilter<ValidationFilter<UserLoginRequest>>();
     }
 }
