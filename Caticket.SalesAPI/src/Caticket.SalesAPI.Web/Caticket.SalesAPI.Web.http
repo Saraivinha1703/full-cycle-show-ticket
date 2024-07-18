@@ -9,13 +9,24 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:5107/register/user
+Content-Type: application/json
+
+{
+    "email": "User@User.com",
+    "name": "User",
+    "password": "User@1",
+    "confirmPassword": "User@1"
+}
+
+###
 # @name login 
 POST http://localhost:5107/login
 Content-Type: application/json
 
 {
-    "email": "Partner@Partner.com",
-    "password": "Partner@1"
+    "email": "User@User.com",
+    "password": "User@1"
 }
 
 ###
