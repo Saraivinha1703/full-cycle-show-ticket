@@ -26,11 +26,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseIdentity();
+
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
-
-app.UseIdentity();
 
 app.MapUserEndpoints();
 

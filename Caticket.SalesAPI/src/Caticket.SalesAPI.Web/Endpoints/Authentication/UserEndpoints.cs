@@ -42,7 +42,7 @@ public static class UserEndpoints {
         
         app.MapGet(
             "/test", 
-            [Authorize]
+            [Authorize(Roles = Roles.Partner)]
             () => {
                 return "test";
             }
