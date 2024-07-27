@@ -2,28 +2,30 @@ using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Infrastructure.Interfaces;
 using Caticket.PartnerAPI.Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Caticket.PartnerAPI.Infrastructure.Data;
 
 public class DatabaseContext : DbContext { 
-    public DatabaseContext() { }   
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
+    public DatabaseContext() { }
+       
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+    	
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) {
-        var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
-        //running on container
-        // var connectionString = "server=partner-db;user=root;password=root;database=api";
+    // protected override void OnConfiguring(DbContextOptionsBuilder options) {
+    //     var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
+    //     //running on container
+    //     // var connectionString = "server=partner-db;user=root;password=root;database=api";
 
-        //running locally
-        //var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
-        var dbInfo = new DatabaseConnectionInfo();
+    //     //running locally
+    //     //var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
         
-        options.UseMySql(
-            dbInfo.ConnectionString, 
-            serverVersion, 
-            o => o.MigrationsAssembly(dbInfo.Assembly)
-        );
-    }
+    //     options.UseMySql(
+    //         DbInfo?.ConnectionString, 
+    //         serverVersion, 
+    //         o => o.MigrationsAssembly(DbInfo?.Assembly)
+    //     );
+    // }
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 

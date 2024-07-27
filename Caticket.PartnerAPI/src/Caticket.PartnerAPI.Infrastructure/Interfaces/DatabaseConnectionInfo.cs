@@ -2,6 +2,6 @@ namespace Caticket.PartnerAPI.Infrastructure.Interfaces;
 
 public class DatabaseConnectionInfo
 {
-    public string Assembly { get; set; } = null!;
-    public string ConnectionString { get; set; } = null!;
+    public required string Assembly { get; set; }
+    public required string ConnectionString { get; set; }
 }

@@ -16,15 +16,10 @@ var config = new ConfigurationManager();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<DatabaseConnectionInfo>(options => config.GetSection("DatabaseConnectionInfo").Bind(options));
-builder.Services.ConfigureDatabase();
+builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.AddCoreServices();
 
 var app = builder.Build();
-
-using (DatabaseContext dbContext = new() ) {
-    dbContext.Database.Migrate();
-} 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
