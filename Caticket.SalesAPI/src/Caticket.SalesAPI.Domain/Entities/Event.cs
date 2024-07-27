@@ -10,7 +10,7 @@ public class Event(
     string imageURL, 
     int capacity, 
     decimal price, 
-    int partnerId, 
+    Guid partnerId, 
     Rating? rating = null
 ) : BaseEntity
 {
@@ -22,8 +22,7 @@ public class Event(
     public string ImageURL { get; set; } = imageURL;
     public int Capacity { get; set; } = capacity;
     public decimal Price { get; set; } = price;
-    //TODO: id int ??
-    public int PartnerId { get; set; } = partnerId;
+    public Guid PartnerId { get; set; } = partnerId;
 
     public ICollection<Spot>? Spots { get; set; }
     public ICollection<Ticket>? Tickets { get; set; }
