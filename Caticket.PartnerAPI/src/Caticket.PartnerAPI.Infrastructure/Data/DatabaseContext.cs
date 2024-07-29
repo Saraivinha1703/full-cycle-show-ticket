@@ -6,26 +6,24 @@ using Microsoft.Extensions.Options;
 
 namespace Caticket.PartnerAPI.Infrastructure.Data;
 
-public class DatabaseContext : DbContext { 
-    public DatabaseContext() { }
-       
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
-    	
+public class DatabaseContext : DbContext {        
+    public DatabaseContext(IOptions<DatabaseConnectionInfo> dbInfo) { 
+        DbInfo = dbInfo.Value; 
+    }
 
-    // protected override void OnConfiguring(DbContextOptionsBuilder options) {
-    //     var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
-    //     //running on container
-    //     // var connectionString = "server=partner-db;user=root;password=root;database=api";
+    public DatabaseContext(DbContextOptions<DatabaseContext> options, IOptions<DatabaseConnectionInfo> dbInfo) : base(options) { 
+        DbInfo = dbInfo.Value;
+    }
 
-    //     //running locally
-    //     //var connectionString = "server=localhost;user=root;password=root;database=api;port=3307";
-        
-    //     options.UseMySql(
-    //         DbInfo?.ConnectionString, 
-    //         serverVersion, 
-    //         o => o.MigrationsAssembly(DbInfo?.Assembly)
-    //     );
-    // }
+    public DatabaseConnectionInfo DbInfo { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options) {
+        options.UseMySql(
+            DbInfo.ConnectionString, 
+            ServerVersion.AutoDetect(DbInfo.ConnectionString), 
+            o => o.MigrationsAssembly(DbInfo.Assembly)
+        );
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
