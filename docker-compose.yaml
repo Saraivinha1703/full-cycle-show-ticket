@@ -12,8 +12,7 @@ services:
   partner-app:
     build: ./Caticket.PartnerAPI
     ports:
-      - 5000:5000
-      - 5001:5001
+      - 5001:5000
     volumes:
       - ./Caticket.PartnerAPI:/home/dotnet/app
     depends_on:
