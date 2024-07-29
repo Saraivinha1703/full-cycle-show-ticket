@@ -16,8 +16,8 @@ public class SpotRepository(DatabaseContext dbContext) : Repository<Spot>(dbCont
             .FirstOrDefaultAsync(s => s.Name == name) 
             ?? throw new EntityNotFoundException("Spot");
 
-    public async Task<IEnumerable<Spot>> FindSpotsByEventId(Guid eventId)
-        => await _dbContext.Set<Spot>().Where(s => s.EventId == eventId).ToListAsync();
+    public IQueryable<Spot> FindSpotsByEventId(Guid eventId)
+        => _dbContext.Set<Spot>().Where(s => s.EventId == eventId);
 
     // public Task ReserveSpot(Guid spotId, Guid ticketId)
     // {

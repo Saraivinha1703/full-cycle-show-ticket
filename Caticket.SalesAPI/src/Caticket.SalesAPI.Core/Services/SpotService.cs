@@ -5,14 +5,17 @@ using Caticket.SalesAPI.Domain.Enumerators;
 
 namespace Caticket.SalesAPI.Core.Services;
 
-public class SpotService(IRepository<Spot> spotRepository, IUnitOfWork _unitOfWork) {
-    private readonly IRepository<Spot> _spotRepository = spotRepository;
+public class SpotService(ISpotRepository spotRepository, IUnitOfWork _unitOfWork) {
+    private readonly ISpotRepository _spotRepository = spotRepository;
     private readonly IUnitOfWork _unitOfWork = _unitOfWork;
     
     public Task<Spot> CreateSpot(Guid eventId, Spot spot) {
         ValidateSpot(spot);
         return Task.FromResult(spot);
     }
+
+    public async Task<Spot> FindSpotByName(Guid eventId, string name) 
+        => await _spotRepository.FindSpotByName(eventId, name);
 
     public async Task<IEnumerable<Spot>> CreateSpotsRange(Guid eventId, int quantity, int rowMax = 10) {
         if(quantity <= 0 || rowMax <= 0) throw new InvalidSpotQuantityException("Error during Spots creation service");
@@ -33,12 +36,12 @@ public class SpotService(IRepository<Spot> spotRepository, IUnitOfWork _unitOfWo
         try {
             await _spotRepository.CreateRangeAsync(spots);
             await _unitOfWork.Commit();
-        return spots;
+
+            return spots;
         } catch {
             throw;
         }
     }
-
 
     public async Task ReserveSpot(Guid spotId, Guid ticketId) {
         Spot spot = await _spotRepository.GetByIdAsync(spotId, true);
