@@ -1,6 +1,7 @@
 using Caticket.SalesAPI.Domain.Entities;
 using Caticket.SalesAPI.Domain.Interfaces;
 using Caticket.SalesAPI.Infrastructure.Data;
+using Caticket.SalesAPI.Infrastructure.Interfaces;
 using Caticket.SalesAPI.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ public static class InfrastructureConfiguration {
         //db config
         services.AddDbContext<DatabaseContext>();
         
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         services.AddScoped<IRepository<Event>, EventRepository>();
         services.AddScoped<IRepository<Spot>, SpotRepository>();
         services.AddScoped<IRepository<Ticket>, TicketRepository>();

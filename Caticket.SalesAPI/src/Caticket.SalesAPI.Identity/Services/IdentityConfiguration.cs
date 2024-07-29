@@ -10,10 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Caticket.SalesAPI.Identity.Constants;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 
 namespace Caticket.SalesAPI.Identity.Services;
 
@@ -21,17 +19,28 @@ public static class IdentityConfiguration {
     /// <summary>
     /// The identity entities and database configuration and dependency injection is made on the <c>Identity</c> layer.
     /// </summary>
-    public static void ConfigureIdentity(this IServiceCollection services, IConfiguration configuration) {
+    public static void ConfigureIdentity(this IServiceCollection services, IConfiguration configuration) {        
+        IConfigurationSection dbInfoAppSettingsOptions = configuration.GetSection(nameof(DatabaseConnectionInfo));
+
+        string assembly = dbInfoAppSettingsOptions[nameof(DatabaseConnectionInfo.Assembly)] ?? throw new Exception("Error during database assembly configuration");
+        string connectionString = dbInfoAppSettingsOptions[nameof(DatabaseConnectionInfo.ConnectionString)] ?? throw new Exception("Error during database connection string configuration");
+
+        services.Configure<DatabaseConnectionInfo>(options => {
+            options.Assembly = assembly;
+            options.ConnectionString = connectionString;
+        });
+
         services.AddDbContext<IdentityDataContext>();
 
         services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<IdentityDataContext>()
             .AddDefaultTokenProviders();
 
-        services.AddScoped<IIdentityService, IdentityService>();
-
-        using IdentityDataContext dbContext = new();
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        using IdentityDataContext dbContext = new(serviceProvider.GetRequiredService<IOptions<DatabaseConnectionInfo>>());
             dbContext.Database.Migrate();
+
+        services.AddScoped<IIdentityService, IdentityService>();
 
         //JWT config
         IConfigurationSection jwtAppSettingsOptions = configuration.GetSection(nameof(JwtOptions));

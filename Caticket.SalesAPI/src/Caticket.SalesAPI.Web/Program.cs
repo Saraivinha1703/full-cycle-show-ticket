@@ -1,5 +1,6 @@
 using Caticket.SalesAPI.Web.Middlewares;
 using Caticket.SalesAPI.Identity.Services;
+using Caticket.SalesAPI.Core.Services;
 using Caticket.SalesAPI.Infrastructure.Services;
 using Caticket.SalesAPI.Web.Endpoints.Authentication;
 using FluentValidation;
@@ -18,6 +19,7 @@ builder.Services.AddScoped<IValidator<UserLoginRequest>, UserLoginValidator>();
 
 builder.Services.ConfigureIdentity(builder.Configuration);
 builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.AddCoreServices();
 
 var app = builder.Build();
 

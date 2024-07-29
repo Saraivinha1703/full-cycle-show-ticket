@@ -1,23 +1,27 @@
+using Caticket.SalesAPI.Identity.Configurations;
 using Caticket.SalesAPI.Identity.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 namespace Caticket.SalesAPI.Identity.Data;
 
 public class IdentityDataContext : IdentityDbContext<User, Role, string> {
-    public IdentityDataContext(DbContextOptions<IdentityDataContext> options) : base(options) {}
-    public IdentityDataContext() {}
+    public IdentityDataContext(DbContextOptions<IdentityDataContext> options, IOptions<DatabaseConnectionInfo> dbInfo) : base(options) {
+        DbInfo = dbInfo.Value;
+    }
+
+    public IdentityDataContext(IOptions<DatabaseConnectionInfo> dbInfo) {
+        DbInfo = dbInfo.Value;
+    }
     
+    public DatabaseConnectionInfo DbInfo { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = "server=localhost;user=root;password=root;database=auth;port=3309";
-        //ServerVersion sv = new MySqlServerVersion(new Version(8, 0, 30));
-
         optionsBuilder.UseMySql(
-            connectionString, 
-            ServerVersion.AutoDetect(connectionString), 
-            msql => msql.MigrationsAssembly("Caticket.SalesAPI.Web")
+            DbInfo.ConnectionString, 
+            ServerVersion.AutoDetect(DbInfo.ConnectionString), 
+            msql => msql.MigrationsAssembly(DbInfo.Assembly)
         );
-
-        base.OnConfiguring(optionsBuilder);
     }
 }
