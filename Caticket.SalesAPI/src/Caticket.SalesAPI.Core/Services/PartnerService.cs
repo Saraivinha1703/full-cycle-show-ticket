@@ -2,46 +2,48 @@ using System.Net.Http.Json;
 using System.Text;
 using Caticket.SalesAPI.Core.DTOs.Request;
 using Caticket.SalesAPI.Core.DTOs.Response;
+using Caticket.SalesAPI.Domain.Enumerators;
 
 namespace Caticket.SalesAPI.Core.Services;
 
-public class ParterService {
-    const string BaseURL = "http://localhost:0000";
+public class PartnerService {
+    //const string BaseURL = "http://partner-app:5000";
+    const string BaseURL = "http://localhost:5001";
     
-    public async Task<List<ReservationResponse>> MakeReservation(ReservationRequest reservationRequest) {
+    public async Task<Tuple<List<string>, List<ReservationResponse>?>> MakeReservation(ReservationRequest reservationRequest) {
         PartnerReservationRequest partnerReservationRequest = new() {
             Email = reservationRequest.Email,
-            TicketType = reservationRequest.TicketType,
+            TicketKind = reservationRequest.TicketType,
             Spots = reservationRequest.Spots
         };
 
         HttpClient httpClient = new();
-        StringBuilder stringBuilder = new();
+        StringBuilder stringBuilder = new(BaseURL);
 
         stringBuilder
-            .Append(BaseURL)
             .Append("/events/")
             .Append(reservationRequest.EventId)
             .Append("/reserve");
 
-        var response = await httpClient.PostAsJsonAsync(stringBuilder.ToString(), partnerReservationRequest);
+        HttpResponseMessage response = await httpClient.PostAsJsonAsync(stringBuilder.ToString(), partnerReservationRequest);
 
-        if(!response.IsSuccessStatusCode) throw new Exception("Reservation Error: error while calling partner API to reseve spots");
+        if(!response.IsSuccessStatusCode) throw new Exception("Reservation Error: error while calling partner API to reserve spots");
 
-        PartnerReservationResponse[] content = await response.Content.ReadFromJsonAsync<PartnerReservationResponse[]>() 
+        PartnerReservationResponse content = await response.Content.ReadFromJsonAsync<PartnerReservationResponse>() 
             ?? throw new Exception("Reservation Error: error while converting partner API response");
 
-        IEnumerable<ReservationResponse> reservationResponse = content.Select(res => 
+        if(content.Item2 == null) {
+            return new(["Fail during reservation"], null);
+        }
+
+        IEnumerable<ReservationResponse> reservationResponse = content.Item2.Select(res => 
             new ReservationResponse() {
                 Id = res.Id,
-                //Email = res.Email, 
-                Spot = res.Spot, 
-                Status = res.Status, 
-                //TicketType = res.TicketKind,
-                //EventId = res.EventId,
+                Spot = res.Spot.Name,
+                Status = Enumeration.From<SpotStatus>(res.Spot.Status), 
             }
         );
 
-        return reservationResponse.ToList();
+        return new([], reservationResponse.ToList());
     }
 } 
