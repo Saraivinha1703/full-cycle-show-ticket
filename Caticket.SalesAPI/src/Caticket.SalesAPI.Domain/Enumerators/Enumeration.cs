@@ -15,10 +15,22 @@ public abstract class Enumeration(string name, int id) : IComparable
 
     public static bool IsValid<T>(string name) where T : Enumeration 
         => GetAll<T>().Any(t => t.Name == name);
+    
+    public static bool IsValid<T>(int id) where T : Enumeration 
+        => GetAll<T>().Any(t => t.Id == id);
 
     public static T From<T>(string name) where T : Enumeration {
         if(IsValid<T>(name)) {
             T type = GetAll<T>().FirstOrDefault(t => t.Name == name) ?? throw new InvalidEnumerationException(nameof(T));
+            return type;
+        } else {
+            throw new InvalidEnumerationException(nameof(T));
+        }
+    }
+    
+    public static T From<T>(int id) where T : Enumeration {
+        if(IsValid<T>(id)) {
+            T type = GetAll<T>().FirstOrDefault(t => t.Id == id) ?? throw new InvalidEnumerationException(nameof(T));
             return type;
         } else {
             throw new InvalidEnumerationException(nameof(T));
