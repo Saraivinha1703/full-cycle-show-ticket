@@ -10,5 +10,5 @@ export default function AppLayout({
 
   if (!hasToken) redirect("/auth/login");
 
-  return <div className="h-[calc(100%-4rem)]">{children}</div>;
+  return <div className="flex flex-col h-full pt-16">{children}</div>;
 }
