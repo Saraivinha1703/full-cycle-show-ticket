@@ -19,13 +19,13 @@ export function LoginForm() {
   }, []);
 
   if (!isMounted) return (
-    <main className="w-full h-[calc(100%-4rem)] flex justify-center items-center">
+    <main className="w-full h-screen flex justify-center items-center">
       <PiSpinnerGap className="text-accent w-12 h-12 animate-spin" />
     </main>
   );
 
   return (
-    <main className="w-full h-[calc(100%-4rem)] flex justify-center items-center">
+    <main className="w-full h-screen flex justify-center items-center">
       <form
         className="transition-all duration-300 flex flex-col gap-6 w-full md:w-3/4 lg:w-1/2 border border-input rounded-lg p-4 hover:shadow-md hover:shadow-black/10"
         action={formAction}

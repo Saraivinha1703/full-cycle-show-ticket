@@ -63,6 +63,26 @@ export default function DashboardPage() {
       price: 30,
       rating: "G",
     },
+    {
+      id: "1",
+      date: "2024-01-01T10:00:00Z",
+      image_url: "",
+      location: "Lisbon, Portugal",
+      name: "Queen Show",
+      organization: "a",
+      price: 30,
+      rating: "G",
+    },
+    {
+      id: "1",
+      date: "2024-01-01T10:00:00Z",
+      image_url: "",
+      location: "Lisbon, Portugal",
+      name: "Queen Show",
+      organization: "a",
+      price: 30,
+      rating: "G",
+    },
   ];
 
   return (
