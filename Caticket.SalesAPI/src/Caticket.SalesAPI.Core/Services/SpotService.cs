@@ -14,6 +14,8 @@ public class SpotService(ISpotRepository spotRepository, IUnitOfWork _unitOfWork
         return Task.FromResult(spot);
     }
 
+    public Spot[] GetAllSpots(Guid eventId) => _spotRepository.FindSpotsByEventId(eventId).ToArray();
+
     public async Task<Spot> FindSpotByName(Guid eventId, string name) 
         => await _spotRepository.FindSpotByName(eventId, name);
 

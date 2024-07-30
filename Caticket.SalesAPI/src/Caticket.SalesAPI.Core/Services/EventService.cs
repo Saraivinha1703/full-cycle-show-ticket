@@ -1,3 +1,4 @@
+using System.Formats.Asn1;
 using Caticket.SalesAPI.Domain.Entities;
 using Caticket.SalesAPI.Domain.Enumerators;
 using Caticket.SalesAPI.Domain.Interfaces;
@@ -11,7 +12,10 @@ public class EventService(IRepository<Event> eventRepository) {
         return Task.FromResult(new Spot("", Guid.NewGuid(), SpotStatus.Available));
     }
  
-    public async Task<List<Event>> ListEvents() {
-        return (await _eventRepository.GetAllAsync()).ToList();
-    }
+    public async Task<List<Event>> ListEvents() 
+        => (await _eventRepository.GetAllAsync()).ToList();
+
+
+    public async Task<Event> GetEvent(Guid eventId) 
+        => await _eventRepository.GetByIdAsync(eventId);
 } 

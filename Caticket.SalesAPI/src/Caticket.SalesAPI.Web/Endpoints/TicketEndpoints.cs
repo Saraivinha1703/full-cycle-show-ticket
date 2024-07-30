@@ -11,8 +11,9 @@ namespace Caticket.SalesAPI.Web.Endpoints;
 public static class TicketEndpoints {
     public static void MapTicketEndpoints(this WebApplication app) {
         app.MapPost(
-            "/ticket/buy", 
+            "events/{eventId}/buy-tickets", 
             async (
+                Guid eventId,
                 [FromServices] TicketService ticketService, 
                 [FromServices] PartnerService partnerService,
                 [FromServices] SpotService spotService,
