@@ -1,3 +1,5 @@
+import { SpotSeat } from "@/components/spot-seat";
+
 export function EventSeats() {
   const spots = [{ name: "A1" }];
   return (
@@ -5,6 +7,20 @@ export function EventSeats() {
       <span className="w-full text-lg font-semibold tracking-widest bg-muted text-center uppercase py-2 rounded-md">
         stage
       </span>
+      <div className="md:w-full md:justify-normal">
+        <div className="flex gap-3 items-center py-2">
+          <span className="w-4">A</span>
+          {spots.map((spot) => (
+            <SpotSeat
+              key={spot.name}
+              spotId={spot.name}
+              spotLabel={spot.name.slice(1)}
+              selected={false}
+              reserved={false}
+            />
+          ))}
+        </div>
+      </div>
       <div className="flex justify-evenly">
         <div className="flex items-center gap-2">
           <circle className="bg-emerald-500 w-4 h-4 rounded-full" />

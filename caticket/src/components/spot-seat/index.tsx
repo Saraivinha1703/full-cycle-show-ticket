@@ -25,7 +25,9 @@ export function SpotSeat({
       <label
         htmlFor={`spot-${spotId}`}
         className="transition-all duration-300 h-6 w-6 cursor-pointer select-none rounded-sm bg-emerald-500 text-center peer-checked:bg-primary peer-disabled:cursor-not-allowed peer-disabled:bg-muted"
-      />
+      >
+        {spotLabel}
+      </label>
     </div>
   );
 }

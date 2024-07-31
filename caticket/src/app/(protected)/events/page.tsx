@@ -1,7 +1,7 @@
 import { ShowCard } from "@/components/show-card";
 import { EventModel } from "@/models/event-model";
 
-export default function DashboardPage() {
+export default function EventsPage() {
   const events: EventModel[] = [
     {
       id: "1",
