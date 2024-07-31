@@ -1,4 +1,5 @@
 using Caticket.SalesAPI.Identity.Configurations;
+using Custom = Caticket.SalesAPI.Identity.Constants;
 using Caticket.SalesAPI.Identity.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,14 @@ public class IdentityDataContext : IdentityDbContext<User, Role, string> {
             ServerVersion.AutoDetect(DbInfo.ConnectionString), 
             msql => msql.MigrationsAssembly(DbInfo.Assembly)
         );
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Role>().HasData(
+            new Role(Custom.Roles.Partner) { 
+                Id = Guid.NewGuid().ToString() 
+            });
+        base.OnModelCreating(builder);
     }
 }

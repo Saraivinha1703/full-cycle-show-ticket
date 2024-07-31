@@ -16,7 +16,7 @@ public static class InfrastructureConfiguration {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IRepository<Event>, EventRepository>();
-        services.AddScoped<IRepository<Spot>, SpotRepository>();
+        services.AddScoped<ISpotRepository, SpotRepository>();
         services.AddScoped<IRepository<Ticket>, TicketRepository>();
     }
 }

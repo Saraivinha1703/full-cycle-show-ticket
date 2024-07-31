@@ -39,6 +39,8 @@ public static class IdentityConfiguration {
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         using IdentityDataContext dbContext = new(serviceProvider.GetRequiredService<IOptions<DatabaseConnectionInfo>>());
             dbContext.Database.Migrate();
+            dbContext.Database.EnsureCreated();
+
 
         services.AddScoped<IIdentityService, IdentityService>();
 

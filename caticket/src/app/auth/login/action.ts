@@ -36,7 +36,7 @@ export async function Login(
       .sign(key);
 
     cookies().set("token", token);
-    redirect("/dashboard");
+    redirect("/events");
   } else {
     return { errors: res.error.issues };
   }

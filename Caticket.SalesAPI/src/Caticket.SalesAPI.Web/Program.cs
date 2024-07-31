@@ -17,8 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IValidator<UserSignUpRequest>, UserSignUpValidator>();
 builder.Services.AddScoped<IValidator<UserLoginRequest>, UserLoginValidator>();
 
-builder.Services.ConfigureIdentity(builder.Configuration);
 builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.ConfigureIdentity(builder.Configuration);
 builder.Services.AddCoreServices();
 
 var app = builder.Build();

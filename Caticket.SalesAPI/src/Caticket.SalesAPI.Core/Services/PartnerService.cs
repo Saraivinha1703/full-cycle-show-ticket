@@ -13,8 +13,8 @@ public class PartnerService {
     public async Task<Tuple<List<string>, List<ReservationResponse>?>> MakeReservation(ReservationRequest reservationRequest) {
         PartnerReservationRequest partnerReservationRequest = new() {
             Email = reservationRequest.Email,
-            TicketKind = reservationRequest.TicketType,
-            Spots = reservationRequest.Spots
+            TicketKind = 1,
+            Spots = reservationRequest.Spots.AsEnumerable().Select(s => s.Name).ToArray()
         };
 
         HttpClient httpClient = new();

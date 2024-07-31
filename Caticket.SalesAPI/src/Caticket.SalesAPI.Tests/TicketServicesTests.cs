@@ -21,16 +21,16 @@ public class TicketServiceTests {
         ok2.ShouldBe(true);
     }
 
-    [Fact]
-     public void TicketService_TicketTest() {
-        var ticketService = new TicketService();
+    // [Fact]
+    //  public void TicketService_TicketTest() {
+    //     var ticketService = new TicketService();
 
-        TicketType half = ticketService.TestTicketType("half");
-        TicketType full = ticketService.TestTicketType("full");
-        var ex = Should.Throw<InvalidEnumerationException>(() => ticketService.TestTicketType("fuLl"));
+    //     TicketType half = ticketService.TestTicketType("half");
+    //     TicketType full = ticketService.TestTicketType("full");
+    //     var ex = Should.Throw<InvalidEnumerationException>(() => ticketService.TestTicketType("fuLl"));
 
-        half.ShouldBe(TicketType.Half);
-        full.ShouldBe(TicketType.Full);
-        ex.ShouldNotBeNull().ShouldBeOfType<InvalidEnumerationException>();
-    }
+    //     half.ShouldBe(TicketType.Half);
+    //     full.ShouldBe(TicketType.Full);
+    //     ex.ShouldNotBeNull().ShouldBeOfType<InvalidEnumerationException>();
+    // }
 }

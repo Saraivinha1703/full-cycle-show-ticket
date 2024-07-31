@@ -12,6 +12,6 @@ RUN dotnet restore
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-RUN dotnet run
+#RUN dotnet run --project ./src/Caticket.SalesAPI.Web
 
-CMD tail -f /dev/null
+#CMD tail -f /dev/null
