@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { SignUpUser } from "./action";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -141,12 +141,22 @@ export function SignUpUserForm() {
         </div>
 
         <div className="flex justify-evenly w-full">
-          <Button type="submit">Submit</Button>
+          <SubmitForm />
           <Button variant="outline" type="reset">
             Clean
           </Button>
         </div>
       </form>
     </main>
+  );
+}
+
+function SubmitForm() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" disabled={pending}>
+      Submit
+    </Button>
   );
 }
