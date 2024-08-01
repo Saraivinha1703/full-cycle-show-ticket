@@ -19,6 +19,7 @@ builder.Services.AddScoped<IValidator<UserLoginRequest>, UserLoginValidator>();
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureIdentity(builder.Configuration);
+builder.Services.AddHealthChecks();
 builder.Services.AddCoreServices();
 
 var app = builder.Build();

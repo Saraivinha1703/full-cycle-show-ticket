@@ -1,10 +1,13 @@
 FROM node:20-slim
 
-WORKDIR /home/next/app
-COPY . .
+USER root
 
+RUN mkdir -p /usr/src/app
+WORKDIR /home/next/app
+
+COPY package.json /home/next/app
 RUN yarn install
 
-EXPOSE 3000
+COPY . /home/next/app
 
-CMD yarn build && yarn start
+EXPOSE 3000

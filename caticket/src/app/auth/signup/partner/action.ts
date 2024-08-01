@@ -1,9 +1,10 @@
 "use server";
 
+import { BASE_SALESAPI_URL } from "@/consts/sales-app";
 import { BaseServerResponse } from "@/models/base-response";
 import { ValidationErrorTypes } from "@/models/validation-error-types";
 import { redirect } from "next/navigation";
-import { z, ZodIssue } from "zod";
+import { z } from "zod";
 
 const schema = z
   .object({
@@ -43,8 +44,9 @@ export async function SignUpPartner(
   if (!res.success) return { errors: { zod: res.error.issues } };
 
   console.log(res.data);
+  console.log("Sales API on: ", `${BASE_SALESAPI_URL}/register/partner`);
 
-  const response = await fetch("http://localhost:5001/register/partner", {
+  const response = await fetch(`${BASE_SALESAPI_URL}/register/partner`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(req),

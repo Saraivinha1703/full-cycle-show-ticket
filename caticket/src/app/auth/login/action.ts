@@ -1,5 +1,6 @@
 "use server";
 
+import { BASE_SALESAPI_URL } from "@/consts/sales-app";
 import { BaseServerResponse } from "@/models/base-response";
 import { ValidationErrorTypes } from "@/models/validation-error-types";
 import { cookies } from "next/headers";
@@ -30,7 +31,7 @@ export async function Login(
 
   console.log(res.data);
 
-  const response = await fetch("http://localhost:5001/login", {
+  const response = await fetch(`${BASE_SALESAPI_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(req),

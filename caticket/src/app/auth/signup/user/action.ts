@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { ValidationErrorTypes } from "@/models/validation-error-types";
 import { BaseServerResponse } from "@/models/base-response";
+import { BASE_SALESAPI_URL } from "@/consts/sales-app";
 
 const schema = z
   .object({
@@ -51,7 +52,7 @@ export async function SignUpUser(
     confirmPassword: res.data.confirmPassword,
   });
 
-  const response = await fetch("http://localhost:5001/register/user", {
+  const response = await fetch(`${BASE_SALESAPI_URL}/register/user`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: dto,

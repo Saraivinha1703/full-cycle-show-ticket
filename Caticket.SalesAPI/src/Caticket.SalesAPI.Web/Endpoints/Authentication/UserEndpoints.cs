@@ -62,5 +62,7 @@ public static class UserEndpoints {
                 return Results.Ok(result);
             }
         ).AddEndpointFilter<ValidationFilter<UserLoginRequest>>();
+
+        app.MapHealthChecks("/health");
     }
 }
