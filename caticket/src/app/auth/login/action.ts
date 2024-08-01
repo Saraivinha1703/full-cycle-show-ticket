@@ -26,32 +26,20 @@ export async function Login(
 
   const res = schema.safeParse(req);
 
-  if (res.success) {
-    console.log(res.data);
-    //call api - password should be encrypted with RSA key
-    const response = await fetch("http://localhost:5001/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req),
-    });
+  if (!res.success) return { errors: { zod: res.error.issues } };
 
-    const data: ServerResponse = await response.json();
+  console.log(res.data);
 
-    // const token = await new SignJWT({
-    //   email: res.data.email,
-    //   name: "test",
-    //   roles: ["user"],
-    // })
-    //   .setProtectedHeader({ alg: "HS256" })
-    //   .setIssuedAt()
-    //   .sign(key);
-    if (response.ok && data.token) {
-      cookies().set("token", data.token);
-      redirect("/events");
-    } else {
-      return { errors: { server: data.errors } };
-    }
-  } else {
-    return { errors: { zod: res.error.issues } };
-  }
+  const response = await fetch("http://localhost:5001/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
+
+  const data: ServerResponse = await response.json();
+
+  if (!response.ok || !data.token) return { errors: { server: data.errors } };
+
+  cookies().set("token", data.token);
+  redirect("/events");
 }

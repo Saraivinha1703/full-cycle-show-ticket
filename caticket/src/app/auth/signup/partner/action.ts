@@ -40,35 +40,21 @@ export async function SignUpPartner(
 
   const res = schema.safeParse(req);
 
-  if (res.success) {
-    console.log(res.data);
+  if (!res.success) return { errors: { zod: res.error.issues } };
 
-    //call api - password should be encrypted with RSA key
-    const response = await fetch("http://localhost:5001/register/partner", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req),
-    });
+  console.log(res.data);
 
-    const data: BaseServerResponse = await response.json();
+  const response = await fetch("http://localhost:5001/register/partner", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
 
-    console.log(JSON.stringify(data));
-    // const token = await new SignJWT({
-    //   email: res.data.email,
-    //   name: res.data.name,
-    //   roles: ["partner"],
-    // })
-    //   .setProtectedHeader({ alg: "HS256" })
-    //   .setIssuedAt()
-    //   .sign(key);
+  const data: BaseServerResponse = await response.json();
 
-    //cookies().set("token", token);
-    if (response.ok) {
-      redirect("/auth/login");
-    } else {
-      return { errors: { server: data.errors } };
-    }
-  } else {
-    return { errors: { zod: res.error.issues } };
-  }
+  console.log(JSON.stringify(data));
+
+  if (!response.ok) return { errors: { server: data.errors } };
+
+  redirect("/auth/login");
 }

@@ -40,42 +40,28 @@ export async function SignUpUser(
 
   const res = schema.safeParse(req);
 
-  if (res.success) {
-    console.log(res.data);
-    //call api - password should be encrypted with RSA key
-    const dto = JSON.stringify({
-      email: res.data.email,
-      name: res.data.name,
-      password: res.data.password,
-      confirmPassword: res.data.confirmPassword,
-    });
+  if (!res.success) return { errors: { zod: res.error.issues } };
 
-    const response = await fetch("http://localhost:5001/register/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: dto,
-    });
+  console.log(res.data);
 
-    const data: BaseServerResponse = await response.json();
+  const dto = JSON.stringify({
+    email: res.data.email,
+    name: res.data.name,
+    password: res.data.password,
+    confirmPassword: res.data.confirmPassword,
+  });
 
-    console.log(data);
+  const response = await fetch("http://localhost:5001/register/user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: dto,
+  });
 
-    // const token = await new SignJWT({
-    //   email: res.data.email,
-    //   name: res.data.name,
-    //   roles: ["user"],
-    // })
-    //   .setProtectedHeader({ alg: "HS256" })
-    //   .setIssuedAt()
-    //   .sign(key);
+  const data: BaseServerResponse = await response.json();
 
-    // cookies().set("token", token);
-    if (response.ok) {
-      redirect("/auth/login");
-    } else {
-      return { errors: { server: data.errors } };
-    }
-  } else {
-    return { errors: { zod: res.error.issues } };
-  }
+  console.log(data);
+
+  if (!response.ok) return { errors: { server: data.errors } };
+
+  redirect("/auth/login");
 }
