@@ -1,7 +1,16 @@
 <!-- 
-# How this project work
+# How this project work -->
 # Clone and Test!
---- Some docker image to run this project --- -->
+For now, I just made the authentication work with ASP.NET Identity with roles (I still need to refactor both APIs, they are way different than the course).
+
+To test this project run: 
+```bash
+git clone https://github.com/Saraivinha1703/full-cycle-show-ticket.git
+```
+
+inside the `full-cycle-show-ticket/caticket` project folder, rename the `.env.example` to `.env`.
+
+Now, you just need to have docker or podman installed and run `docker compose up -d` and test the authentication from the website provided at `http://localhost:3000`.
 
 # Project Development Idea
 <blockquote>
