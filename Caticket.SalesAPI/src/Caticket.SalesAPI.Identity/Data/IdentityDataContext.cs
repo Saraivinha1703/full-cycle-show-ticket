@@ -29,8 +29,10 @@ public class IdentityDataContext : IdentityDbContext<User, Role, string> {
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Role>().HasData(
-            new Role(Custom.Roles.Partner) { 
-                Id = Guid.NewGuid().ToString() 
+            new Role() { 
+                Id = Guid.NewGuid().ToString(),
+                Name = Custom.Roles.Partner,
+                NormalizedName = Custom.Roles.Partner.ToUpper() 
             });
         base.OnModelCreating(builder);
     }
