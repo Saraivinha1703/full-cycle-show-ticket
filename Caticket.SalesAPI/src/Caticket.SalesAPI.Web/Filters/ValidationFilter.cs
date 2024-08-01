@@ -14,7 +14,7 @@ public class ValidationFilter<T>(IValidator<T> validator) : IEndpointFilter wher
         ValidationResult result = await _validator.ValidateAsync(dto);
 
         if(!result.IsValid) 
-            return Results.Json(result.Errors, statusCode: StatusCodes.Status400BadRequest);
+            return Results.Json(new { success = false, errors = result.Errors.Select(e => e.ErrorMessage).ToArray() }, statusCode: StatusCodes.Status400BadRequest);
         
         return await next(context);
     }

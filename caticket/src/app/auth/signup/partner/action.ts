@@ -1,5 +1,7 @@
 "use server";
 
+import { BaseServerResponse } from "@/models/base-response";
+import { ValidationErrorTypes } from "@/models/validation-error-types";
 import { redirect } from "next/navigation";
 import { z, ZodIssue } from "zod";
 
@@ -25,12 +27,10 @@ const schema = z
       });
   });
 
-const key = new TextEncoder().encode("secret");
-
 export async function SignUpPartner(
   prevState: any,
   formData: FormData
-): Promise<{ errors: ZodIssue[] }> {
+): Promise<{ errors: ValidationErrorTypes } | undefined> {
   const req = {
     name: formData.get("name"),
     email: formData.get("email"),
@@ -44,15 +44,15 @@ export async function SignUpPartner(
     console.log(res.data);
 
     //call api - password should be encrypted with RSA key
-    const response = await fetch("http://localhost:5000/register/partner", {
+    const response = await fetch("http://localhost:5001/register/partner", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req),
     });
 
-    const data = await response.json();
+    const data: BaseServerResponse = await response.json();
 
-    console.log(data);
+    console.log(JSON.stringify(data));
     // const token = await new SignJWT({
     //   email: res.data.email,
     //   name: res.data.name,
@@ -63,8 +63,12 @@ export async function SignUpPartner(
     //   .sign(key);
 
     //cookies().set("token", token);
-    redirect("/auth/login");
+    if (response.ok) {
+      redirect("/auth/login");
+    } else {
+      return { errors: { server: data.errors } };
+    }
   } else {
-    return { errors: res.error.issues };
+    return { errors: { zod: res.error.issues } };
   }
 }

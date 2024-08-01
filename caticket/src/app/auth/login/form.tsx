@@ -10,19 +10,28 @@ import { PiSpinnerGap } from "react-icons/pi";
 
 export function LoginForm() {
   const [isMounted, setIsMounted] = useState(false);
-  const [state, formAction] = useFormState(Login, { errors: [] });
-  const emailErrors = state.errors.filter((i) => i.path[0] === "email");
-  const passwordErrors = state.errors.filter((i) => i.path[0] === "password");
+  const [state, formAction] = useFormState(Login, {
+    errors: { zod: [], server: undefined },
+  });
+
+  const emailErrors = state?.errors.zod
+    ? state.errors.zod.filter((i) => i.path[0] === "email")
+    : [];
+
+  const passwordErrors = state?.errors.zod
+    ? state.errors.zod.filter((i) => i.path[0] === "password")
+    : [];
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) return (
-    <main className="w-full h-screen flex justify-center items-center">
-      <PiSpinnerGap className="text-accent w-12 h-12 animate-spin" />
-    </main>
-  );
+  if (!isMounted)
+    return (
+      <main className="w-full h-screen flex justify-center items-center">
+        <PiSpinnerGap className="text-accent w-12 h-12 animate-spin" />
+      </main>
+    );
 
   return (
     <main className="w-full h-screen flex justify-center items-center">
@@ -30,6 +39,19 @@ export function LoginForm() {
         className="transition-all duration-300 flex flex-col gap-6 w-full md:w-3/4 lg:w-1/2 border border-input rounded-lg p-4 hover:shadow-md hover:shadow-black/10"
         action={formAction}
       >
+        {state?.errors.server !== undefined && (
+          <ol className="flex flex-col gap-1 list-decimal px-6 border border-destructive py-2 rounded-md">
+            {state?.errors.server.map((err, idx) => (
+              <li
+                key={idx}
+                className="text-destructive font-semibold tracking-wider text-sm"
+              >
+                {err}
+              </li>
+            ))}
+          </ol>
+        )}
+
         <h1 className="text-2xl font-semibold">Log In</h1>
         <div className="flex flex-col gap-2">
           <Input
