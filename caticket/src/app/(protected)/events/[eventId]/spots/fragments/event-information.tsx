@@ -8,7 +8,7 @@ export function EventInformation() {
         <h1 className="font-bold tracking-widest text-2xl">Show</h1>
         <span className="text-sm font-light text-foreground/60">Lisbon</span>
       </div>
-      <div className="flex gap-20">
+      <div className="flex flex-col gap-6 sm:flex-row sm:gap-20">
         <div className="flex flex-col gap-2">
           <span className="font-semibold">Organization</span>
           <span className="text-foreground/60">a</span>
