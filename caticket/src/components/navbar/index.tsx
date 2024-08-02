@@ -5,9 +5,25 @@ import { cookies } from "next/headers";
 import { ThemeSwitcher } from "../theme-switcher";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { BASE_SALESAPI_URL } from "@/consts/sales-app";
 
-export function Navbar() {
+export async function Navbar() {
   const token = cookies().get("token");
+
+  async function validateToken(token: string): Promise<boolean> {
+    const response = await fetch(`${BASE_SALESAPI_URL}/validate-user`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log("token validation header: ", response.status);
+
+    if (response.status === 401) return false; //unauthorized
+
+    return response.ok;
+  }
+
+  const isTokenValid =
+    token !== undefined ? await validateToken(token.value) : false;
 
   async function navigateToLogIn() {
     "use server";
@@ -21,7 +37,7 @@ export function Navbar() {
         <h1 className="text-3xl font-light tracking-wide">Caticket</h1>
       </Link>
       <div className="flex gap-2">
-        {token === undefined ? (
+        {!isTokenValid ? (
           <form action={navigateToLogIn}>
             <Button type="submit" variant="ghost">
               Log In

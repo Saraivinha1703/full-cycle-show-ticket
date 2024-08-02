@@ -41,10 +41,18 @@ public static class UserEndpoints {
         ).AddEndpointFilter<ValidationFilter<UserSignUpRequest>>();
         
         app.MapGet(
-            "/test", 
+            "/validate-partner", 
             [Authorize(Roles = Roles.Partner)]
             () => {
-                return "test";
+                return true;
+            }
+        );
+
+        app.MapGet(
+            "/validate-user", 
+            [Authorize]
+            () => {
+                return true;
             }
         );
 
