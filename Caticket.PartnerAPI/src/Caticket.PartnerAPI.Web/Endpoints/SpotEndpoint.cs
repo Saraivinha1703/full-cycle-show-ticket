@@ -19,7 +19,7 @@ public static class SpotEndpoint {
             ) => {
                 return new { 
                     Event = await eventService.GetEventById(eventId), 
-                    Spots = await spotService.GetAllSpots(eventId) 
+                    Spots = spotService.GetAllSpots(eventId) 
                 };
             }
         );

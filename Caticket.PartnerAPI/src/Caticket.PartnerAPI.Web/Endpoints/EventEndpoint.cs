@@ -10,8 +10,8 @@ public static class EventEndpoint {
     public static void MapEventEndpoints(this WebApplication app) {
         app.MapGet(
             "/events", 
-            async ([FromServices] EventService eventService) => {
-               return await eventService.GetAllEvents();
+            ([FromServices] EventService eventService) => {
+               return eventService.GetAllEvents();
             }
         );
         

@@ -11,8 +11,8 @@ public class SpotService(
     private readonly IEventRepository _eventRepository = eventRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async Task<IEnumerable<Spot>> GetAllSpots(Guid eventId) {
-        return await _spotRepository.GetAllAsync(s => s.EventId == eventId);
+    public IEnumerable<Spot> GetAllSpots(Guid eventId) {
+        return _spotRepository.GetAll(s => s.EventId == eventId);
     }
 
     public async Task<Spot> CreateSpot(Guid eventId, Spot createSpot) {

@@ -8,7 +8,7 @@ namespace Caticket.PartnerAPI.Infrastructure.Repositories;
 
 public class EventRepository(DatabaseContext dbContext, TenantProvider tenantProvider) : Repository<Event>(dbContext, tenantProvider), IEventRepository
 {
-    public async Task<IEnumerable<Event>> GetEventByNameAsync(string name) {
-        return await GetAllAsync(e => e.Name == name);
+    public IEnumerable<Event> GetEventByName(string name) {
+        return GetAll(e => e.Name == name);
     }
 }

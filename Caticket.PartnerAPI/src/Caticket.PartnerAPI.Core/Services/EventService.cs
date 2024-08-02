@@ -29,12 +29,12 @@ public class EventService(
         }
     }
 
-    public async Task<IEnumerable<Event>> GetEventByName(string name) {
-        return await _eventRepository.GetEventByNameAsync(name);
+    public IEnumerable<Event> GetEventByName(string name) {
+        return _eventRepository.GetEventByName(name);
     }
 
-    public async Task<IEnumerable<Event>> GetAllEvents() {
-        return await _eventRepository.GetAllAsync();
+    public IEnumerable<Event> GetAllEvents() {
+        return _eventRepository.GetAll();
     }
 
     public async Task<Event> Update(Event updateEvent) {

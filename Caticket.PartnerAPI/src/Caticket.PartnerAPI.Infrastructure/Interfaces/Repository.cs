@@ -29,62 +29,68 @@ public abstract class Repository<T>(DatabaseContext dbContext, TenantProvider te
         _dbContext.Set<T>().Remove(entity);
     }
 
-    public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, bool? queryable = false, bool? trackable = false)
+    public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null, bool queryable = false, bool trackable = false, bool withTenant = false)
     {
-        IEnumerable<T> list = [];
-        if(queryable == true && trackable == false) {
-            if(predicate != null) {
-                list = [.. _dbContext.Set<T>().Where(predicate).AsNoTracking().AsQueryable()];
-            } else {
-                list = [.. _dbContext.Set<T>().AsNoTracking().AsQueryable()];
+        IEnumerable<T> list;
+        if (queryable == true && trackable == false)
+        {
+            if (predicate != null)
+            {
+                list = [.. _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).Where(predicate).AsNoTracking().AsQueryable()];
             }
-        } 
-        else if(trackable == true && queryable == false) {
-            if(predicate != null) {
-                list = [.. _dbContext.Set<T>().Where(predicate).AsTracking()];
-            } else {
-                list = _dbContext.Set<T>().AsEnumerable().ToList();
+            else
+            {
+                list = [.. _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).AsNoTracking().AsQueryable()];
             }
-        } 
-        else if (trackable == true && queryable == true) {
-            if(predicate != null) {
-                list = [.. _dbContext.Set<T>().Where(predicate).AsTracking().AsQueryable()];
-            } else {
-                list = [.. _dbContext.Set<T>().AsTracking().AsQueryable()];
+        }
+        else if (trackable == true && queryable == false)
+        {
+            if (predicate != null)
+            {
+                list = [.. _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).Where(predicate).AsTracking()];
             }
-        } else {
-            if (predicate != null) {
-                list = await _dbContext.Set<T>().Where(predicate).AsNoTracking().ToListAsync();
-            } else {
-                list = await _dbContext.Set<T>().AsNoTracking().ToListAsync();
+            else
+            {
+                list = [.. _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).AsTracking()];
+            }
+        }
+        else if (trackable == true && queryable == true)
+        {
+            if (predicate != null)
+            {
+                list = [.. _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).Where(predicate).AsTracking().AsQueryable()];
+            }
+            else
+            {
+                list = [.. _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).AsTracking().AsQueryable()];
+            }
+        }
+        else
+        {
+            if (predicate != null)
+            {
+                list = _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).Where(predicate).AsNoTracking();
+            }
+            else
+            {
+                list = _dbContext.Set<T>().Where(t => !withTenant || t.TenantId == TenantId).AsNoTracking();
             }
         }
 
         return list;
     }
 
-    public virtual async Task<T> GetByIdAsync(Guid id, bool trackable = false) =>
-         trackable ? await _dbContext.Set<T>()
-            .Where(t => t.Id == id)
+    public virtual async Task<T> GetByIdAsync(Guid id, bool trackable = false) 
+        => trackable ? await _dbContext.Set<T>()
+            .Where(t => t.TenantId == TenantId && t.Id == id)
             .AsTracking()
             .FirstOrDefaultAsync() 
             ?? throw new Exception("Not able to return a entity for this Id") 
             : await _dbContext.Set<T>()
-            .Where(t => t.Id == id)
+            .Where(t => t.TenantId == TenantId && t.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync() 
             ?? throw new Exception("Not able to return a entity for this Id");
-
-    // public virtual void Update(T entity)
-    // {
-    //     _dbContext.Set<T>().Update(entity);
-    // }
-    
-    // public virtual void UpdateRange(List<T> entities)
-    // {
-    //     _dbContext.Set<T>().UpdateRange(entities);
-    // }
-
     
     private bool disposed = false;
     protected virtual void Dispose(bool disposing)
