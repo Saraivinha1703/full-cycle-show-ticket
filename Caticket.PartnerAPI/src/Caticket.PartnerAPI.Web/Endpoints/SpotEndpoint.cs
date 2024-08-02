@@ -9,10 +9,18 @@ namespace Caticket.PartnerAPI.Web.Endpoints;
 
 public static class SpotEndpoint {
     public static void MapSpotEndpoints(this WebApplication app) {
+        //spots on events just for specific tenant
         app.MapGet(
             "/events/{eventId}/spots", 
-            async (Guid eventId, [FromServices] SpotService spotService) => {
-                return await spotService.GetAllSpots(eventId);
+            async (
+                Guid eventId, 
+                [FromServices] SpotService spotService, 
+                [FromServices] EventService eventService
+            ) => {
+                return new { 
+                    Event = await eventService.GetEventById(eventId), 
+                    Spots = await spotService.GetAllSpots(eventId) 
+                };
             }
         );
 
@@ -21,11 +29,15 @@ public static class SpotEndpoint {
                 Guid eventId, 
                 [FromBody] CreateSpotRequest createSpotDto, 
                 [FromServices] SpotService spotService,
-                [FromServices] EventService eventService
+                [FromServices] EventService eventService,
+                [FromServices] TenantProvider tenantProvider
             ) => {
+                Guid tenantId = tenantProvider.GetTenantId() ?? throw new ApplicationException($"POST /events/{eventId}/spots can not be executed without a tenant Id.");
+
                 Spot spot = new() {
                     EventId = eventId, 
                     Name = createSpotDto.Name, 
+                    TenantId = tenantId,
                     CreatedAt = DateTime.Now, 
                     Status = SpotStatus.Available
                 };
@@ -35,8 +47,16 @@ public static class SpotEndpoint {
         );
         
         app.MapPost("/events/{eventId}/spots/reserve", 
-           async (Guid eventId, [FromBody] ReserveSpotDto reserveSpotDto, [FromServices] EventService eventService) => {
-            return await eventService.ReserveSpot(reserveSpotDto, eventId);
-        });
+           async (
+                Guid eventId, 
+                [FromBody] ReserveSpotDto reserveSpotDto, 
+                [FromServices] EventService eventService,
+                [FromServices] TenantProvider tenantProvider
+            ) => {
+                Guid tenantId = tenantProvider.GetTenantId() ?? throw new ApplicationException($"POST /events/{eventId}/spots/reserve can not be executed without a tenant Id.");
+            
+                return await eventService.ReserveSpot(reserveSpotDto, eventId, tenantId);
+            }
+        );
     }
 }

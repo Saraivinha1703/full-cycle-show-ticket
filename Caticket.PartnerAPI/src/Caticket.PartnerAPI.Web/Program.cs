@@ -1,10 +1,7 @@
 using Caticket.PartnerAPI.Core.Services;
-using Caticket.PartnerAPI.Infrastructure.Data;
-using Caticket.PartnerAPI.Infrastructure.Interfaces;
 using Caticket.PartnerAPI.Infrastructure.Services;
 using Caticket.PartnerAPI.Web.Endpoints;
 using Caticket.PartnerAPI.Web.Middlewares;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.AddCoreServices();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -34,6 +32,8 @@ app.UseHttpsRedirection();
 
 app.MapEventEndpoints();
 app.MapSpotEndpoints();
+
+app.MapHealthChecks("/health");
 
 app.Run();
 

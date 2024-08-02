@@ -126,6 +126,10 @@ namespace Caticket.PartnerAPI.Web.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("SpotId")
                         .HasColumnType("char(36)");
 

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Caticket.PartnerAPI.Domain\Caticket.PartnerAPI.Domain.csproj" />
+    <ProjectReference Include="..\Caticket.PartnerAPI.Core\Caticket.PartnerAPI.Core.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

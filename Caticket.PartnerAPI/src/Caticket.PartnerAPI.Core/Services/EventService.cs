@@ -12,13 +12,12 @@ public class EventService(
     IRepository<Ticket> ticketRepository,
     IRepository<ReservationHistory> reservationHistoryRepository,
     IUnitOfWork unitOfWork
-    ) {
+) {
     private readonly IEventRepository _eventRepository = eventRepository;
     private readonly ISpotRepository _spotRepository = spotRepository;
     private readonly IRepository<Ticket> _ticketRepository = ticketRepository;
     private readonly IRepository<ReservationHistory> _reservationHistoryRepository = reservationHistoryRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-
 
     public async Task<Event> CreateEvent(Event e) {
         try {
@@ -61,9 +60,9 @@ public class EventService(
         return await _eventRepository.GetByIdAsync(eventId);
     }
 
-    public async Task<Tuple<List<string>, List<Ticket>?>> ReserveSpot(ReserveSpotDto reserveSpots, Guid eventId) {
+    public async Task<Tuple<List<string>, List<Ticket>?>> ReserveSpot(ReserveSpotDto reserveSpots, Guid eventId, Guid tenantId) {
         List<string> messages = [];
-        var spots = await _spotRepository.FindManySpotsByName(reserveSpots.Spots, eventId, true);
+        var spots = await _spotRepository.FindManySpotsByName(reserveSpots.Spots.Select(s => s.Name).ToList(), eventId, true);
         
         if(spots.Count == 0 || spots == null) {
             messages.Add("No spots found.");
@@ -100,8 +99,15 @@ public class EventService(
                 tickets.Add(
                     new() { 
                         Email = reserveSpots.Email, 
+                        Owner = reserveSpots.Spots
+                            .Where(spot => spot.Name == s.Name)
+                            .FirstOrDefault(new SpotDto() {
+                                Name = s.Name, 
+                                Owner = reserveSpots.Email
+                            }).Owner,
                         CreatedAt = DateTime.Now, 
-                        TicketKind = reserveSpots.TicketKind, 
+                        TicketKind = reserveSpots.TicketKind,
+                        TenantId = tenantId,
                         SpotId = s.Id, 
                     }
                 );
@@ -111,6 +117,7 @@ public class EventService(
                         Email = reserveSpots.Email, 
                         CreatedAt = DateTime.Now, 
                         TicketKind = reserveSpots.TicketKind, 
+                        TenantId = tenantId,
                         SpotId = s.Id, 
                     }
                 );

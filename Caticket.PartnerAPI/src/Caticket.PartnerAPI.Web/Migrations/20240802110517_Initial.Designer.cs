@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Caticket.PartnerAPI.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240626150700_Initial")]
+    [Migration("20240802110517_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -126,6 +126,10 @@ namespace Caticket.PartnerAPI.Web.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnType("longtext");
 

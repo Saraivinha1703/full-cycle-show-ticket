@@ -7,7 +7,6 @@ public class Spot : BaseEntity {
     public SpotStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
     public required Guid EventId { get; set; }
     public virtual Event? Event { get; set; }
 }

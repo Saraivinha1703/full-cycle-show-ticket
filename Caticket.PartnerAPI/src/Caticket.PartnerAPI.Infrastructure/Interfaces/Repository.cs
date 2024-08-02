@@ -1,14 +1,16 @@
 
 using System.Linq.Expressions;
+using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Domain.Interfaces;
 using Caticket.PartnerAPI.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Caticket.PartnerAPI.Infrastructure.Interfaces;
 
-public abstract class Repository<T>(DatabaseContext dbContext) : IRepository<T> where T : class, IBaseEntity
+public abstract class Repository<T>(DatabaseContext dbContext, TenantProvider tenantProvider) : IRepository<T> where T : class, IBaseEntity
 {
     private readonly DatabaseContext _dbContext = dbContext;
+    protected readonly Guid? TenantId = tenantProvider.GetTenantId();
 
     public virtual async Task CreateAsync(T entity)
     {
