@@ -45,7 +45,7 @@ export default function SpotPage() {
 
       <div className="flex flex-col gap-2">
         <h1 className="text-xl font-semibold">Select your seat</h1>
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <EventSeats />
           <PaymentInformation />
         </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function PaymentInformation() {
   return (
-    <div className="transition-all duration-200 flex flex-col gap-8 bg-accent w-2/5 p-4 rounded-md shadow-md shadow-black/10 hover:ring-1 hover:ring-primary">
+    <div className="transition-all duration-200 flex flex-col gap-8 bg-accent w-full p-4 rounded-md shadow-md shadow-black/10 hover:ring-1 hover:ring-primary sm:w-2/5">
       <h2 className="text-xl font-semibold tracking-wide">
         Check the event prices
       </h2>

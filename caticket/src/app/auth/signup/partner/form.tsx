@@ -39,7 +39,7 @@ export function SignUpPartnerForm() {
     );
 
   return (
-    <main className="w-full min-h-screen flex justify-center items-center">
+    <main className="w-full min-h-screen flex justify-center items-center p-4 sm:p-0">
       <div className="p-[0.08rem] rounded-lg w-full md:w-3/4 lg:w-1/2 bg-gradient-to-tr from-primary to-secondary">
         <form
           className="transition-all duration-300 flex flex-col gap-6 w-full bg-background border border-input rounded-lg p-4 hover:shadow-md hover:shadow-black/10"

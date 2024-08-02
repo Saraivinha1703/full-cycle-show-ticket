@@ -34,7 +34,7 @@ export function LoginForm() {
     );
 
   return (
-    <main className="w-full h-screen flex justify-center items-center">
+    <main className="w-full h-screen flex justify-center items-center p-4 sm:p-0">
       <form
         className="transition-all duration-300 flex flex-col gap-6 w-full md:w-3/4 lg:w-1/2 border border-input rounded-lg p-4 hover:shadow-md hover:shadow-black/10"
         action={formAction}
