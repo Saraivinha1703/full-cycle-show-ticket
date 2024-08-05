@@ -6,7 +6,7 @@ import { UserEvents } from "./fragments/user-events";
 export default async function EventsPage() {
   const token = cookies().get("token")!.value;
 
-  const payload = getJwtTokenPayload(token);
+  const payload = await getJwtTokenPayload(token);
 
   return payload.role === "partner" ? (
     <PartnerEvents token={token} />
