@@ -6,6 +6,7 @@ using Caticket.SalesAPI.Web.Endpoints.Authentication;
 using FluentValidation;
 using Caticket.SalesAPI.Application.DTOs.Request;
 using Caticket.SalesAPI.Application.Validators;
+using Caticket.SalesAPI.Web.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddScoped<IValidator<UserLoginRequest>, UserLoginValidator>();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureIdentity(builder.Configuration);
 builder.Services.AddHealthChecks();
-builder.Services.AddCoreServices();
+builder.Services.AddCoreServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -37,6 +38,7 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.MapEventsEndpoints();
 app.MapUserEndpoints();
 
 app.Run();

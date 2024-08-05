@@ -1,4 +1,8 @@
-POST http://localhost:5107/register/partner
+GET http://localhost:5000/all-events
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NjdjZTRhNy03OWUyLTRlY2QtYjQwMy1kOTM1NjVhNDE1ZmIiLCJlbWFpbCI6IlRlc3RlQFRlc3RlLmNvbSIsImp0aSI6ImRmNWI1YmRkLWI2ZDItNGYwMC1hYzQ4LTY5MjAzYmVmNGM0ZiIsIm5iZiI6MTcyMjg2Mzk1MSwiaWF0IjoiMDgvMDUvMjAyNCAxNDoxOToxMSIsInJvbGUiOiJwYXJ0bmVyIiwiZXhwIjoxNzIyODY3NTUxLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiQXVkaWVuY2UifQ.wdx5DTUSJX0A5l9e5gG81QpuL67U2qkjRfKTo3IL_5JFHod51qdPoh1ZfBySGC5Vjzb52VxJeDnUigd-rjHNUQ
+
+###
+POST http://localhost:5000/register/partner
 Content-Type: application/json
 
 {
@@ -9,7 +13,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5107/register/user
+POST http://localhost:5000/register/user
 Content-Type: application/json
 
 {
@@ -21,14 +25,14 @@ Content-Type: application/json
 
 ###
 # @name login 
-POST http://localhost:5107/login
+POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-    "email": "User@User.com",
-    "password": "User@1"
+    "email": "Teste@Teste.com",
+    "password": "Teste@1"
 }
 
 ###
-GET http://localhost:5107/test
+GET http://localhost:5000/test
 Authorization: Bearer {{ login.response.body.token }}

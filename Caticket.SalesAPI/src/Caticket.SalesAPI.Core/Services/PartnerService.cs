@@ -2,14 +2,12 @@ using System.Net.Http.Json;
 using System.Text;
 using Caticket.SalesAPI.Core.DTOs.Request;
 using Caticket.SalesAPI.Core.DTOs.Response;
+using Caticket.SalesAPI.Domain.Entities;
 using Caticket.SalesAPI.Domain.Enumerators;
 
 namespace Caticket.SalesAPI.Core.Services;
 
 public class PartnerService {
-    //const string BaseURL = "http://partner-app:5000";
-    const string BaseURL = "http://localhost:5001";
-    
     public async Task<Tuple<List<string>, List<ReservationResponse>?>> MakeReservation(ReservationRequest reservationRequest) {
         PartnerReservationRequest partnerReservationRequest = new() {
             Email = reservationRequest.Email,
@@ -18,7 +16,7 @@ public class PartnerService {
         };
 
         HttpClient httpClient = new();
-        StringBuilder stringBuilder = new(BaseURL);
+        StringBuilder stringBuilder = new();
 
         stringBuilder
             .Append("/events/")
