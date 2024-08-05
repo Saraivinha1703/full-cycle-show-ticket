@@ -1,6 +1,6 @@
-using Caticket.SalesAPI.Application.Interfaces.DTOs;
+using Caticket.SalesAPI.Identity.Interfaces.DTOs;
 
-namespace Caticket.SalesAPI.Application.DTOs.Response;
+namespace Caticket.SalesAPI.Identity.DTOs.Response;
 
 public abstract class BaseResponse : IResponse
 {

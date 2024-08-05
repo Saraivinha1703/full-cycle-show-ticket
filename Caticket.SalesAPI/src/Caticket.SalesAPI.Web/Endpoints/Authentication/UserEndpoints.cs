@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Caticket.SalesAPI.Application.DTOs.Request;
+using Caticket.SalesAPI.Identity.DTOs.Request;
+using Caticket.SalesAPI.Identity.DTOs.Response;
 using Caticket.SalesAPI.Application.Interfaces.Services;
-using Caticket.SalesAPI.Application.DTOs.Response;
 using Caticket.SalesAPI.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Caticket.SalesAPI.Identity.Constants;

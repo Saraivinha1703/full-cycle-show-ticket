@@ -1,4 +1,4 @@
-using Caticket.SalesAPI.Application.DTOs.Request;
+using Caticket.SalesAPI.Identity.DTOs.Request;
 using FluentValidation;
 
 namespace Caticket.SalesAPI.Application.Validators;

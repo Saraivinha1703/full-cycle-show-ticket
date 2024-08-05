@@ -1,4 +1,4 @@
-namespace Caticket.SalesAPI.Application.Interfaces.DTOs;
+namespace Caticket.SalesAPI.Identity.Interfaces.DTOs;
 
 public interface IResponse {
     bool Success { get; }

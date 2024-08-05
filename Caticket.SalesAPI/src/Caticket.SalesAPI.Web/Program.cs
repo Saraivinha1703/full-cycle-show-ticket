@@ -4,9 +4,10 @@ using Caticket.SalesAPI.Core.Services;
 using Caticket.SalesAPI.Infrastructure.Services;
 using Caticket.SalesAPI.Web.Endpoints.Authentication;
 using FluentValidation;
-using Caticket.SalesAPI.Application.DTOs.Request;
 using Caticket.SalesAPI.Application.Validators;
 using Caticket.SalesAPI.Web.Endpoints;
+using Caticket.SalesAPI.Web.Services;
+using Caticket.SalesAPI.Identity.DTOs.Request;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,13 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IValidator<UserSignUpRequest>, UserSignUpValidator>();
-builder.Services.AddScoped<IValidator<UserLoginRequest>, UserLoginValidator>();
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureIdentity(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddCoreServices(builder.Configuration);
+
+builder.Services.AddScoped<IValidator<UserSignUpRequest>, UserSignUpValidator>();
+builder.Services.AddScoped<IValidator<UserLoginRequest>, UserLoginValidator>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<UserProvider>();
 
 var app = builder.Build();
 

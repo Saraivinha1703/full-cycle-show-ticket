@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Caticket.SalesAPI.Application.DTOs.Request;
-using Caticket.SalesAPI.Application.DTOs.Response;
 using Caticket.SalesAPI.Application.Interfaces.Services;
 using Caticket.SalesAPI.Identity.Configurations;
 using Caticket.SalesAPI.Identity.Constants;
+using Caticket.SalesAPI.Identity.DTOs.Request;
+using Caticket.SalesAPI.Identity.DTOs.Response;
 using Caticket.SalesAPI.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -65,6 +65,36 @@ public class IdentityService(
 
         return userLoginResponse;
     }
+
+    public async Task<User> GetUserFromTokenAsync(string token) {
+        JwtSecurityTokenHandler tokenHandler = new();
+        ClaimsPrincipal claimsPrincipal = new();
+
+        if(!tokenHandler.CanReadToken(token)) throw new ApplicationException("Not a readable token at 'GetUserFromToeknAsync'");
+
+        JwtSecurityToken jwt = tokenHandler.ReadJwtToken(token);
+
+        claimsPrincipal.AddIdentity(new ClaimsIdentity(jwt.Subject));
+
+        User user = await _userManager.GetUserAsync(claimsPrincipal) ?? throw new ApplicationException("No user found for the passed claims principal");
+
+        return user;
+    }
+
+    public Guid GetUserIdFromToken(string token) {
+        JwtSecurityTokenHandler tokenHandler = new();
+
+        if(!tokenHandler.CanReadToken(token)) throw new ApplicationException("Not a readable token at 'GetUserFromToeknAsync'");
+
+        JwtSecurityToken jwt = tokenHandler.ReadJwtToken(token);
+
+        Console.WriteLine($"subject: {jwt.Subject}");
+
+        if(!Guid.TryParse(jwt.Subject.Trim(), out Guid userId)) throw new ApplicationException("Error while parsing the JWT subject to user id");
+
+        return userId;
+    }
+
 
     // https://datatracker.ietf.org/doc/html/rfc7519
     private async Task<UserLoginResponse> GenerateTokenAsync(string email) {

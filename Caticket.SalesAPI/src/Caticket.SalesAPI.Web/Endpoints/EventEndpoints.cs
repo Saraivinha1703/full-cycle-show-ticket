@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Caticket.SalesAPI.Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Caticket.SalesAPI.Web.Services;
 
 namespace Caticket.SalesAPI.Web.Endpoints;
 
@@ -20,7 +21,9 @@ public static class EventEndpoints {
             [Authorize]
             async (
                 [FromServices] EventService eventService
-            ) => await eventService.ListAllEvents()
+            ) => {
+                await eventService.ListAllEvents();
+            }
         );
     }
 }

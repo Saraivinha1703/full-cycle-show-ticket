@@ -1,4 +1,4 @@
-namespace Caticket.SalesAPI.Application.DTOs.Request;
+namespace Caticket.SalesAPI.Identity.DTOs.Request;
 
 public class UserSignUpRequest {
     public required string Email { get; set; }
