@@ -8,8 +8,8 @@ public sealed class TenantProvider(IHttpContextAccessor httpContextAccessor) {
 
     public Guid? GetTenantId() {
         StringValues? tenantIdHeader = _httpContextAccessor.HttpContext?.Request.Headers[TenantIdHeaderName];
-
-        if(!tenantIdHeader.HasValue) 
+        
+        if(tenantIdHeader is null || string.IsNullOrEmpty(tenantIdHeader.Value)) 
             return null;
 
         if(!Guid.TryParse(tenantIdHeader.Value, out Guid tenantId)) 

@@ -9,5 +9,8 @@ public static class ServicesConfiguration {
     public static void AddCoreServices(this IServiceCollection services) {
         services.AddScoped<EventService>();
         services.AddScoped<SpotService>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<TenantProvider>();
     }
 }

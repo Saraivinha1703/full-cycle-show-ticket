@@ -37,6 +37,10 @@ public class EventService(
         return _eventRepository.GetAll();
     }
 
+    public IEnumerable<Event> GetAllTenantEvents() {
+        return _eventRepository.GetAll(null, false, false, true);
+    }
+
     public async Task<Event> Update(Event updateEvent) {
         try {
             var ev = await _eventRepository.GetByIdAsync(updateEvent.Id, true);

@@ -9,9 +9,16 @@ namespace Caticket.PartnerAPI.Web.Endpoints;
 public static class EventEndpoint {
     public static void MapEventEndpoints(this WebApplication app) {
         app.MapGet(
-            "/events", 
+            "/all-events", 
             ([FromServices] EventService eventService) => {
                return eventService.GetAllEvents();
+            }
+        );
+
+        app.MapGet(
+            "/events", 
+            ([FromServices] EventService eventService) => {
+               return eventService.GetAllTenantEvents();
             }
         );
         

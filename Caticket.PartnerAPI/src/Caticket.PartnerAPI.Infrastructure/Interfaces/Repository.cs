@@ -31,6 +31,8 @@ public abstract class Repository<T>(DatabaseContext dbContext, TenantProvider te
 
     public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null, bool queryable = false, bool trackable = false, bool withTenant = false)
     {
+        if(withTenant && TenantId == null) throw new ApplicationException("GetAll with tenant, does not work without TenantId");
+         
         IEnumerable<T> list;
         if (queryable == true && trackable == false)
         {

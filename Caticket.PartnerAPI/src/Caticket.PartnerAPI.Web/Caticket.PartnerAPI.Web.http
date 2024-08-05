@@ -1,7 +1,17 @@
+@partner1 = 951234d4-e886-472d-898c-4e578a152e28
+@partner2 = a6dc1b76-21cc-405a-aecf-b8ed6657e3ff
+@partnerNone = 
+
+GET http://localhost:5000/all-events
+
+###
 GET http://localhost:5000/events
+X-TenantId: {{partner2}}
+
 ###
 # @name createEvent
 POST http://localhost:5000/events
+X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {
@@ -12,10 +22,11 @@ Content-Type: application/json
 
 ###
 PATCH http://localhost:5000/events
+X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {   
-    "id": "e3fe0213-c768-483e-b04e-f4988ef86232",
+    "id": "39e9a85d-26ea-4a31-8a3f-ae07e0d2ac19",
     "name": "bbb",
     "price": 32.99,
     "description": "Some desc",
@@ -24,10 +35,11 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5000/events
+X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {   
-    "id": "326dd65a-1a4c-4ed5-9372-75e3aa9ff852"
+    "id": "8c14b36a-6fc8-4996-a459-1601598ad0ac"
 }
 
 ###
@@ -36,17 +48,20 @@ Content-Type: application/json
 ###
 # @name createSpot
 GET http://localhost:5000/events/{{eventId}}/spots
+X-TenantId: {{partner2}}
 
 ###
 POST http://localhost:5000/events/{{eventId}}/spots
+X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {
-    "name": "A3"
+    "name": "B1"
 }
 
 ###
 POST http://localhost:5000/events/{{eventId}}/spots/reserve
+X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {
