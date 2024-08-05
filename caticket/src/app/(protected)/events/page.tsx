@@ -1,105 +1,16 @@
-import { ShowCard } from "@/components/show-card";
-import { EventModel } from "@/models/event-model";
+import { getJwtTokenPayload } from "@/lib/session";
+import { cookies } from "next/headers";
+import { PartnerEvents } from "./fragments/partner-events";
+import { UserEvents } from "./fragments/user-events";
 
-export default function EventsPage() {
-  const events: EventModel[] = [
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-  ];
+export default async function EventsPage() {
+  const token = cookies().get("token")!.value;
 
-  return (
-    <main className="p-4">
-      <h1>Events available</h1>
-      <div className="flex flex-wrap justify-center gap-12">
-        {events.map((e) => (
-          <ShowCard
-            key={e.id}
-            eventId={e.id}
-            date={new Date(e.date)}
-            image={{ alt: e.name, src: e.image_url }}
-            location={e.location}
-            title={e.name}
-          />
-        ))}
-      </div>
-    </main>
+  const payload = getJwtTokenPayload(token);
+
+  return payload.role === "partner" ? (
+    <PartnerEvents token={token} />
+  ) : (
+    <UserEvents token={token} />
   );
 }

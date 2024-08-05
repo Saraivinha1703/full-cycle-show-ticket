@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Caticket.SalesAPI.Core.Services;
 using Microsoft.AspNetCore.Authorization;
-using Caticket.SalesAPI.Web.Services;
 
 namespace Caticket.SalesAPI.Web.Endpoints;
 
