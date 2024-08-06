@@ -1,6 +1,5 @@
 using Caticket.PartnerAPI.Domain.Entities;
 using Caticket.PartnerAPI.Domain.Enumerators;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Caticket.PartnerAPI.Infrastructure.Mappers;

@@ -1,6 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace Caticket.SalesAPI.Domain.Enumerators;
 
 public class Rating : Enumeration {
+    
+    [JsonConstructor]
     private Rating(string name, int id) : base(name, id) {}
 
     public static Rating G { get; private set; } = new("G", 0);

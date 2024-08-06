@@ -66,20 +66,9 @@ public class IdentityService(
         return userLoginResponse;
     }
 
-    public async Task<User> GetUserFromTokenAsync(string token) {
-        JwtSecurityTokenHandler tokenHandler = new();
-        ClaimsPrincipal claimsPrincipal = new();
+    public async Task<User> GetUserFromTokenAsync(string token, ClaimsPrincipal claimsPrincipal) 
+        => await _userManager.GetUserAsync(claimsPrincipal) ?? throw new ApplicationException("No user found for the passed claims principal");
 
-        if(!tokenHandler.CanReadToken(token)) throw new ApplicationException("Not a readable token at 'GetUserFromToeknAsync'");
-
-        JwtSecurityToken jwt = tokenHandler.ReadJwtToken(token);
-
-        claimsPrincipal.AddIdentity(new ClaimsIdentity(jwt.Subject));
-
-        User user = await _userManager.GetUserAsync(claimsPrincipal) ?? throw new ApplicationException("No user found for the passed claims principal");
-
-        return user;
-    }
 
     public Guid GetUserIdFromToken(string token) {
         JwtSecurityTokenHandler tokenHandler = new();
