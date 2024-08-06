@@ -11,7 +11,7 @@ export async function PartnerEvents({ token }: PartnerEventsProps) {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  const data = response.bodyUsed ? await response.json() : undefined;
+  const data = await response.json();
 
   return (
     <main className="min-h-[calc(100vh-4rem)] p-4">

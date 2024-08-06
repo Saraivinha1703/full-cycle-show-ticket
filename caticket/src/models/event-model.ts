@@ -5,6 +5,7 @@ export type EventModel = {
   date: string;
   price: number;
   rating: string;
-  image_url: string;
+  imageURL: string;
   location: string;
+  tenantId: string;
 };

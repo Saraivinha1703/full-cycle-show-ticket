@@ -7,108 +7,33 @@ type UserEventsProps = {
 };
 
 export async function UserEvents({ token }: UserEventsProps) {
-  const data = await fetch(`${BASE_SALESAPI_URL}/all-events`, {
+  const response = await fetch(`${BASE_SALESAPI_URL}/events`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  const events: EventModel[] = [
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-    {
-      id: "1",
-      date: "2024-01-01T10:00:00Z",
-      image_url: "",
-      location: "Lisbon, Portugal",
-      name: "Queen Show",
-      organization: "a",
-      price: 30,
-      rating: "G",
-    },
-  ];
+  const data: EventModel[] = await response.json();
 
   return (
-    <main className="p-4">
-      <h1>Events available</h1>
+    <main className="min-h-[calc(100vh-4rem)] p-4">
+      <h1 className="text-2xl font-semibold tracking-wide">Events available</h1>
       <div className="flex flex-wrap justify-center gap-12">
-        {events.map((e) => (
-          <ShowCard
-            key={e.id}
-            eventId={e.id}
-            date={new Date(e.date)}
-            image={{ alt: e.name, src: e.image_url }}
-            location={e.location}
-            title={e.name}
-          />
-        ))}
+        {data.length > 0 ? (
+          data.map((e) => (
+            <ShowCard
+              key={e.id}
+              eventId={e.id}
+              date={new Date(e.date)}
+              image={{ alt: e.name, src: /*e.imageURL*/ "" }}
+              location={e.location}
+              title={e.name}
+            />
+          ))
+        ) : (
+          <div>
+            <span>No events available yet. :(</span>
+          </div>
+        )}
       </div>
     </main>
   );
