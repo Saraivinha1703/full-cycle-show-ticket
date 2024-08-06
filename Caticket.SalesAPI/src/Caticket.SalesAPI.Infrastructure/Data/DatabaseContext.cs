@@ -9,7 +9,7 @@ public class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //string connectionString = "server=localhost;user=root;password=root;database=api;port=3306";
+        //string connectionString = "server=localhost;user=root;password=root;database=api;port=3308";
         string connectionString = "server=sales-db;user=root;password=root;database=api;port=3306";
 
         optionsBuilder.UseMySql(
