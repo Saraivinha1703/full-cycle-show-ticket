@@ -1,7 +1,8 @@
 import { ShowCard } from "@/components/show-card";
-import { Button } from "@/components/ui/button";
 import { BASE_SALESAPI_URL } from "@/consts/sales-app";
 import { EventModel } from "@/models/event-model";
+import { AddEvents } from "./add-events";
+import { getJwtTokenPayload } from "@/lib/session";
 
 type PartnerEventsProps = {
   token: string;
@@ -15,11 +16,13 @@ export async function PartnerEvents({ token }: PartnerEventsProps) {
 
   const data: EventModel[] = await response.json();
 
+  const payload = await getJwtTokenPayload(token);
+
   return (
     <main className="min-h-[calc(100vh-4rem)] p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Your events</h1>
-        <Button>Add Event</Button>
+        <AddEvents tenantId={payload.sub} />
       </div>
       {JSON.stringify(data)}
       <div className="flex flex-wrap justify-center gap-12">
