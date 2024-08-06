@@ -61,23 +61,23 @@ services:
   #volumes:
   #  - ./.docker/sales-dbdata:/var/lib/mysql
 
-  # sales-app:
-  #   build: ./Caticket.SalesAPI
-  #   ports:
-  #     - 5002:5000
-  #   volumes:
-  #     - ./Caticket.SalesAPI:/home/dotnet/app
-  #   command: ["dotnet", "run", "--project", "./src/Caticket.SalesAPI.Web"]
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "curl --fail http://localhost:5000/health || exit 1"]
-  #     interval: 20s
-  #     timeout: 20s
-  #     retries: 3
-  #   depends_on:
-  #     sales-db:
-  #       condition: service_healthy
-  #     auth-db:
-  #       condition: service_healthy
+  sales-app:
+    build: ./Caticket.SalesAPI
+    ports:
+      - 5002:5000
+    volumes:
+      - ./Caticket.SalesAPI:/home/dotnet/app
+    command: ["dotnet", "run", "--project", "./src/Caticket.SalesAPI.Web"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:5000/health || exit 1"]
+      interval: 20s
+      timeout: 20s
+      retries: 3
+    depends_on:
+      sales-db:
+        condition: service_healthy
+      auth-db:
+        condition: service_healthy
 
   # front-end:
   #   build: ./caticket
