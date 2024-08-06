@@ -5,6 +5,7 @@ using Caticket.SalesAPI.Web.Services;
 using Caticket.SalesAPI.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Caticket.SalesAPI.Identity.Constants;
+using Caticket.SalesAPI.Core.DTOs.Partner;
 
 namespace Caticket.SalesAPI.Web.Endpoints;
 
@@ -36,6 +37,20 @@ public static class EventEndpoints {
                 } else {
                     return await eventService.ListAllEvents();
                 }
+            }
+        );
+
+        app.MapPost(
+            "/events", 
+            [Authorize(Roles = Roles.Partner)]
+            async (
+                [FromServices] EventService eventService,
+                [FromServices] UserProvider userProvider,
+                [FromBody] CreateEventRequest createEventDto    
+            ) => {
+                Guid tenantId = userProvider.GetUserId() ?? throw new ApplicationException("POST /events can not execute with out a tenant id.");
+
+                return await eventService.CreateEvent(tenantId, createEventDto);
             }
         );
     }

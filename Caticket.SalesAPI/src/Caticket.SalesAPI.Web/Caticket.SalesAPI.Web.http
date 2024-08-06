@@ -1,7 +1,24 @@
 @partner = eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NmExZDRiNC0yZmIyLTRmMmUtYjkwYi0yMzlkZjI4ZGU0NjgiLCJlbWFpbCI6IlRlc3RlQFRlc3RlLmNvbSIsImp0aSI6ImZjYjI4MzM1LTZjYTEtNGFlYi04NjMwLTdjNWJlZjc5MTY3ZSIsIm5iZiI6MTcyMjk1MTk1MywiaWF0IjoiMDgvMDYvMjAyNCAxNDo0NTo1MyIsInJvbGUiOiJwYXJ0bmVyIiwiZXhwIjoxNzIyOTU1NTUzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiQXVkaWVuY2UifQ.BOqWLY1oeHhflO_v9-nmdEgcUj1UsKJiuazrpd0hjG5sFMqYZaDPGCdldCaqt-SajILpbMs_98HbFipAcuZuyQ
-@user = eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZTA0MDQ3MS1hMjA4LTQxZWItYTJmNS1iNzdmYmI5NzA1MTgiLCJlbWFpbCI6IlVzZXJAVXNlci5jb20iLCJqdGkiOiJkN2JiNTBhZC1lNzhiLTQ1Y2UtOWQxMC1mOWM3NThjMGY0NzgiLCJuYmYiOjE3MjI5NTE5OTgsImlhdCI6IjA4LzA2LzIwMjQgMTQ6NDY6MzgiLCJleHAiOjE3MjI5NTU1OTgsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJhdWQiOiJBdWRpZW5jZSJ9.GrvUPyNQbZzBRVmRl3WwM2QV4ZnX6DlNv0X16INztUhLh-ZhT0-3fvS9dOGrO9vZS4ua1He2-Sg4eZQjRM9-mg
+@user = eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZTA0MDQ3MS1hMjA4LTQxZWItYTJmNS1iNzdmYmI5NzA1MTgiLCJlbWFpbCI6IlVzZXJAVXNlci5jb20iLCJqdGkiOiJlNDQ3NjI1OS05M2FmLTQwMGMtODAzMC05OWU5NzdhYWE0MTIiLCJuYmYiOjE3MjI5NTU3MDEsImlhdCI6IjA4LzA2LzIwMjQgMTU6NDg6MjEiLCJleHAiOjE3MjI5NTkzMDEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJhdWQiOiJBdWRpZW5jZSJ9.0qJMHT7_VQPgZ4JG2naqjEgo2ADJoz90k2RO-y-QBLRRBnvrh34ICpXi5Xy09ZHq_Uy70ip8h2ajIquXgkmTdQ
+
 GET http://localhost:5000/events
-Authorization: Bearer {{partner}}
+Authorization: Bearer {{user}}
+
+###
+POST http://localhost:5000/events
+Authorization: Bearer {{user}}
+Content-Type: application/json
+
+{
+    "name": "event",
+    "rating": "G",
+    "location": "Porto",
+    "organization": "MEO",
+    "capacity": 100,
+    "imageURL": "http://blabla",
+    "price": 0,
+    "date": "2024-07-25T20:30:00"
+}
 
 ###
 POST http://localhost:5000/register/partner
