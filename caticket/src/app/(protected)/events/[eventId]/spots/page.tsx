@@ -1,20 +1,19 @@
-import { EventModel } from "@/models/event-model";
 import { SpotModel } from "@/models/spot-model";
 import { EventInformation } from "./fragments/event-information";
 import { EventSeats } from "./fragments/event-seats";
 import { PaymentInformation } from "./fragments/payment-information";
 
 export default function SpotPage() {
-  const event: EventModel = {
-    id: "1",
-    date: "2024-01-01T10:00:00Z",
-    image_url: "",
-    location: "Lisbon, Portugal",
-    name: "Queen Show",
-    organization: "a",
-    price: 30,
-    rating: "G",
-  };
+  // const event: EventModel = {
+  //   id: "1",
+  //   date: "2024-01-01T10:00:00Z",
+  //   imageURL: "",
+  //   location: "Lisbon, Portugal",
+  //   name: "Queen Show",
+  //   organization: "a",
+  //   price: 30,
+  //   rating: "G",
+  // };
 
   const spot: SpotModel[] = [
     {
