@@ -3,8 +3,14 @@ namespace Caticket.PartnerAPI.Web.DTO.Event;
 
 public record UpdateEventRequest(
     Guid Id,
-    string Name, 
-    string? Description, 
+    string Name,
+    string Location,
+    string Organization,
+    string ImageURL,
+    int Capacity,
+    decimal Price,
     string Date, 
-    decimal Price
+    string? Rating,
+    string? Description 
+     
 );

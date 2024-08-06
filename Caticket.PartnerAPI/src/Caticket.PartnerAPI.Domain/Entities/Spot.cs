@@ -1,12 +1,19 @@
-using Caticket.PartnerAPI.Domain.Enums;
+
+using Caticket.PartnerAPI.Domain.Enumerators;
 
 namespace Caticket.PartnerAPI.Domain.Entities;
 
-public class Spot : BaseEntity {
-    public required string Name { get; set; }
-    public SpotStatus Status { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public required Guid EventId { get; set; }
+public class Spot(
+    Guid eventId,
+    string name,
+    DateTime createdAt,
+    SpotStatus spotStatus,
+    DateTime? updatedAt = null
+) : BaseEntity {
+    public string Name { get; set; } = name;
+    public SpotStatus SpotStatus { get; set; } = spotStatus;
+    public DateTime CreatedAt { get; set; } = createdAt;
+    public DateTime? UpdatedAt { get; set; } = updatedAt;
+    public Guid EventId { get; set; } = eventId;
     public virtual Event? Event { get; set; }
 }

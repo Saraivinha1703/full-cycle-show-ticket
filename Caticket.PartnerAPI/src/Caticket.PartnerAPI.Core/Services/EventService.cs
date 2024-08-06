@@ -1,6 +1,6 @@
 using Caticket.PartnerAPI.Core.DTO.Event;
 using Caticket.PartnerAPI.Domain.Entities;
-using Caticket.PartnerAPI.Domain.Enums;
+using Caticket.PartnerAPI.Domain.Enumerators;
 using Caticket.PartnerAPI.Domain.Exceptions;
 using Caticket.PartnerAPI.Domain.Interfaces;
 
@@ -80,8 +80,8 @@ public class EventService(
             return new(messages, null);
         }
 
-        var reservedSpots = spots.FindAll(s => s.Status == SpotStatus.Reserved); 
-        var availableSpots = spots.FindAll(s => s.Status == SpotStatus.Available);
+        var reservedSpots = spots.FindAll(s => s.SpotStatus == SpotStatus.Reserved); 
+        var availableSpots = spots.FindAll(s => s.SpotStatus == SpotStatus.Available);
 
         if (reservedSpots.Count > 0 && availableSpots.Count > 0) {
             reservedSpots.ForEach(s => messages.Add($"The spot '{s.Name}' is reserved."));
@@ -98,32 +98,33 @@ public class EventService(
             List<Ticket> tickets = [];
             List<ReservationHistory> reservationHistories = [];
             
-            spots.ForEach(s => s.Status = SpotStatus.Reserved);
+            spots.ForEach(s => s.SpotStatus = SpotStatus.Reserved);
             spots.ForEach(s => {
                 tickets.Add(
-                    new() { 
-                        Email = reserveSpots.Email, 
-                        Owner = reserveSpots.Spots
-                            .Where(spot => spot.Name == s.Name)
-                            .FirstOrDefault(new SpotDto() {
-                                Name = s.Name, 
-                                Owner = reserveSpots.Email
-                            }).Owner,
-                        CreatedAt = DateTime.Now, 
-                        TicketKind = reserveSpots.TicketKind,
-                        TenantId = tenantId,
-                        SpotId = s.Id, 
-                    }
+                    new Ticket(
+                        s.Id, 
+                        reserveSpots.Email, 
+                        reserveSpots.Spots.Where(spot => spot.Name == s.Name).Select(spot => spot.Owner).First(), 
+                        reserveSpots.Spots.Where(spot => spot.Name == s.Name).Select(spot => spot.OwnerLegalId).First(), 
+                        Enumeration.From<TicketType>(reserveSpots.TicketType), 
+                        DateTime.Now
+                        ) { 
+                            TenantId = tenantId,
+                        }
                 );
 
                 reservationHistories.Add(
-                    new() { 
-                        Email = reserveSpots.Email, 
-                        CreatedAt = DateTime.Now, 
-                        TicketKind = reserveSpots.TicketKind, 
-                        TenantId = tenantId,
-                        SpotId = s.Id, 
-                    }
+                    new ReservationHistory(
+                        s.Id, 
+                        reserveSpots.Email, 
+                        reserveSpots.Spots.Where(spot => spot.Name == s.Name).Select(spot => spot.Owner).First(), 
+                        reserveSpots.Spots.Where(spot => spot.Name == s.Name).Select(spot => spot.OwnerLegalId).First(), 
+                        s.Name,
+                        Enumeration.From<TicketType>(reserveSpots.TicketType),
+                        DateTime.Now
+                        ) { 
+                            TenantId = tenantId,
+                        }
                 );
             });
 

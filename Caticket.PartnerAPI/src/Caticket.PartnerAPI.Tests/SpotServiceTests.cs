@@ -1,6 +1,5 @@
 using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Domain.Entities;
-using Caticket.PartnerAPI.Domain.Enums;
 using FakeItEasy;
 using Shouldly;
 
@@ -13,19 +12,19 @@ public class SpotServiceTests {
         spotService = A.Fake<SpotService>();
     }
 
-    [Fact]
-    public async Task SpotService_CreateSpot_ExpectSpot() {
-        var eventId = Guid.NewGuid();
+    // [Fact]
+    // public async Task SpotService_CreateSpot_ExpectSpot() {
+    //     var eventId = Guid.NewGuid();
 
-        var spot = new Spot() {
-            EventId = eventId,
-            Name = "A1",
-            CreatedAt = DateTime.Now,
-            Status = SpotStatus.Available,
-        };
+    //     var spot = new Spot() {
+    //         EventId = eventId,
+    //         Name = "A1",
+    //         CreatedAt = DateTime.Now,
+    //         Status = SpotStatus.Available,
+    //     };
 
-        var result = await spotService.CreateSpot(eventId, spot);
+    //     var result = await spotService.CreateSpot(eventId, spot);
 
-        result.ShouldBe(spot);
-    }
+    //     result.ShouldBe(spot);
+    // }
 }

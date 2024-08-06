@@ -3,7 +3,7 @@ using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Core.DTO.Event;
 using Caticket.PartnerAPI.Web.DTO.Spot;
 using Caticket.PartnerAPI.Domain.Entities;
-using Caticket.PartnerAPI.Domain.Enums;
+using Caticket.PartnerAPI.Domain.Enumerators;
 
 namespace Caticket.PartnerAPI.Web.Endpoints;
 
@@ -34,12 +34,13 @@ public static class SpotEndpoint {
             ) => {
                 Guid tenantId = tenantProvider.GetTenantId() ?? throw new ApplicationException($"POST /events/{eventId}/spots can not be executed without a tenant Id.");
 
-                Spot spot = new() {
-                    EventId = eventId, 
-                    Name = createSpotDto.Name, 
+                Spot spot = new(
+                    eventId, 
+                    createSpotDto.Name, 
+                    DateTime.Now, 
+                    SpotStatus.Available
+                ) {
                     TenantId = tenantId,
-                    CreatedAt = DateTime.Now, 
-                    Status = SpotStatus.Available
                 };
 
                 return await spotService.CreateSpot(eventId, spot);

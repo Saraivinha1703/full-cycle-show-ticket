@@ -11,11 +11,16 @@ X-TenantId: {{partner2}}
 ###
 # @name createEvent
 POST http://localhost:5000/events
-X-TenantId: {{partner2}}
+X-TenantId: {{partner1}}
 Content-Type: application/json
 
 {
-    "name": "fff",
+    "name": "event",
+    "rating": "G",
+    "location": "Porto",
+    "organization": "MEO",
+    "capacity": 100,
+    "imageURL": "http://blabla",
     "price": 0,
     "date": "2024-07-25T20:30:00"
 }
@@ -28,6 +33,11 @@ Content-Type: application/json
 {   
     "id": "39e9a85d-26ea-4a31-8a3f-ae07e0d2ac19",
     "name": "bbb",
+    "rating": "NC-17",
+    "location": "Faro",
+    "organization": "X",
+    "capacity": 200,
+    "imageURL": "http://aaaaa",
     "price": 32.99,
     "description": "Some desc",
     "date": "2024-07-28T22:22:00"
@@ -43,7 +53,7 @@ Content-Type: application/json
 }
 
 ###
-@eventId = {{ createEvent.response.body.id }}
+@eventId = 04ad6b60-b1fb-4103-ade3-bd9b85fcaa32
 
 ###
 # @name createSpot
@@ -56,7 +66,7 @@ X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {
-    "name": "B1"
+    "name": "A1"
 }
 
 ###
@@ -65,7 +75,9 @@ X-TenantId: {{partner2}}
 Content-Type: application/json
 
 {
-    "spots": ["A1"],
+    "spots": [
+        {"name": "B1", "owner": "John", "ownerLegalId": "123456789"}
+        ],
     "email": "a@a.com",
-    "ticketKind": 1
+    "ticketKind": "full"
 }

@@ -27,9 +27,9 @@ public class DatabaseContext : DbContext {
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
-        new EventMap(modelBuilder.Entity<Event>());
-        new ReservationHistoryMap(modelBuilder.Entity<ReservationHistory>());
-        new SpotMap(modelBuilder.Entity<Spot>());
-        new TicketMap(modelBuilder.Entity<Ticket>());
+        _ = new EventMap(modelBuilder.Entity<Event>());
+        _ = new ReservationHistoryMap(modelBuilder.Entity<ReservationHistory>());
+        _ = new TicketMap(modelBuilder.Entity<Ticket>());
+        _ = new SpotMap(modelBuilder.Entity<Spot>());
     }
 }

@@ -1,5 +1,6 @@
 using Caticket.PartnerAPI.Core.Services;
 using Caticket.PartnerAPI.Domain.Entities;
+using Caticket.PartnerAPI.Domain.Enumerators;
 using Caticket.PartnerAPI.Web.DTO;
 using Caticket.PartnerAPI.Web.DTO.Event;
 using Microsoft.AspNetCore.Mvc;
@@ -31,23 +32,36 @@ public static class EventEndpoint {
             ) => {
                 Guid tenantId = tenantProvider.GetTenantId() ?? throw new ApplicationException("POST /events can not be executed without a Tenant Id.");
 
-                Event e = new() {
-                    Name = eventDto.Name, 
-                    Description = eventDto.Description,    
-                    Date = DateTime.Parse(eventDto.Date),
-                    TenantId = tenantId,
-                    Price = eventDto.Price,
-                };
+                Event e = new(
+                    name: eventDto.Name, 
+                    location: eventDto.Location, 
+                    organization: eventDto.Organization,
+                    imageURL: eventDto.ImageURL,
+                    capacity: eventDto.Capacity, 
+                    price: eventDto.Price, 
+                    date: DateTime.Parse(eventDto.Date), 
+                    createdAt: DateTime.Now, 
+                    description: eventDto.Description, 
+                    rating: eventDto.Rating != null ? Enumeration.From<Rating>(eventDto.Rating) : null
+                    ) {
+                        TenantId = tenantId
+                    };
 
                 var eventResponse = await eventService.CreateEvent(e);
 
                 CreateEventResponse createEventResponse = new(
-                    eventResponse.Id,
-                    eventResponse.Name,
-                    eventResponse.Description,
-                    eventResponse.Date.ToString(),
-                    eventResponse.CreatedAt.ToString(),
-                    eventResponse.Price
+                    Id: eventResponse.Id,
+                    Name: eventResponse.Name,
+                    Location: eventResponse.Location,
+                    Organization: eventResponse.Organization,
+                    ImageURL: eventResponse.ImageURL,
+                    Capacity: eventResponse.Capacity,
+                    Price: eventResponse.Price,
+                    Date: eventResponse.Date.ToString(),
+                    CreatedAt: eventResponse.CreatedAt.ToString(),
+                    TenantId: eventResponse.TenantId,
+                    Description: eventResponse.Description,
+                    Rating: eventResponse.Rating.Name
                 );
 
                 return createEventResponse;
@@ -63,23 +77,37 @@ public static class EventEndpoint {
             ) => {
                 Guid tenantId = tenantProvider.GetTenantId() ?? throw new ApplicationException("PATCH /events can not be executed without a Tenant Id.");
 
-                Event e = new() {
-                    Id = updateEventDto.Id,
-                    Name = updateEventDto.Name, 
-                    Description = updateEventDto.Description,    
-                    TenantId = tenantId,
-                    Date = DateTime.Parse(updateEventDto.Date),
-                    Price = updateEventDto.Price,
-                };
+                Event e = new(
+                    name: updateEventDto.Name, 
+                    location: updateEventDto.Location, 
+                    organization: updateEventDto.Organization,
+                    imageURL: updateEventDto.ImageURL,
+                    capacity: updateEventDto.Capacity, 
+                    price: updateEventDto.Price, 
+                    date: DateTime.Parse(updateEventDto.Date), 
+                    createdAt: DateTime.Now, 
+                    description: updateEventDto.Description, 
+                    rating: updateEventDto.Rating != null ? Enumeration.From<Rating>(updateEventDto.Rating) : null
+                    ) {
+                        Id = updateEventDto.Id,
+                        TenantId = tenantId
+                    };
 
                 var updateResponse = await eventService.Update(e);
 
                 UpdateEventResponse updateEventResponse = new(
-                    updateResponse.Id, 
-                    updateResponse.Name, 
-                    updateResponse.Description, 
-                    updateResponse.Date.ToString(),
-                    updateResponse.Price
+                    Id: updateResponse.Id,
+                    Name: updateResponse.Name,
+                    Location: updateResponse.Location,
+                    Organization: updateResponse.Organization,
+                    ImageURL: updateResponse.ImageURL,
+                    Capacity: updateResponse.Capacity,
+                    Price: updateResponse.Price,
+                    Date: updateResponse.Date.ToString(),
+                    CreatedAt: updateResponse.CreatedAt.ToString(),
+                    TenantId: updateResponse.TenantId,
+                    Description: updateResponse.Description,
+                    Rating: updateResponse.Rating.Name
                 ); 
 
                 return updateEventResponse;
