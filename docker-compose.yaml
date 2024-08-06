@@ -9,75 +9,75 @@ services:
       timeout: 20s
       retries: 10
     ports:
-      - 3308:3306
+      - 3307:3306
   #volumes:
   #  - ./.docker/partner-dbdata:/var/lib/mysql
 
-  partner-app:
-    build: ./Caticket.PartnerAPI
-    ports:
-      - 5001:5000
-    volumes:
-      - ./Caticket.PartnerAPI:/home/dotnet/app
-    command: ["dotnet", "run", "--project", "./src/Caticket.PartnerAPI.Web"]
-    healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://localhost:5000/health || exit 1"]
-      interval: 20s
-      timeout: 20s
-      retries: 3
-    depends_on:
-      partner-db:
-        condition: service_healthy
+  # partner-app:
+  #   build: ./Caticket.PartnerAPI
+  #   ports:
+  #     - 5001:5000
+  #   volumes:
+  #     - ./Caticket.PartnerAPI:/home/dotnet/app
+  #   command: ["dotnet", "run", "--project", "./src/Caticket.PartnerAPI.Web"]
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "curl --fail http://localhost:5000/health || exit 1"]
+  #     interval: 20s
+  #     timeout: 20s
+  #     retries: 3
+  #   depends_on:
+  #     partner-db:
+  #       condition: service_healthy
 
-  sales-db:
-    image: mysql:8.0.30-debian
-    user: root
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=api
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
-    ports:
-      - 3306:3306
+  # sales-db:
+  #   image: mysql:8.0.30-debian
+  #   user: root
+  #   restart: always
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_DATABASE=api
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+  #   ports:
+  #     - 3308:3306
   #volumes:
   #  - ./.docker/sales-dbdata:/var/lib/mysql
 
-  auth-db:
-    image: mysql:8.0.30-debian
-    user: root
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=auth
-    ports:
-      - 3307:3306
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
-    #volumes:
-    #  - ./.docker/sales-dbdata:/var/lib/mysql
+  # auth-db:
+  #   image: mysql:8.0.30-debian
+  #   user: root
+  #   restart: always
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_DATABASE=auth
+  #   ports:
+  #     - 3309:3306
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+  #volumes:
+  #  - ./.docker/sales-dbdata:/var/lib/mysql
 
-  sales-app:
-    build: ./Caticket.SalesAPI
-    ports:
-      - 5002:5000
-    volumes:
-      - ./Caticket.SalesAPI:/home/dotnet/app
-    command: ["dotnet", "run", "--project", "./src/Caticket.SalesAPI.Web"]
-    healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://localhost:5000/health || exit 1"]
-      interval: 20s
-      timeout: 20s
-      retries: 3
-    depends_on:
-      sales-db:
-        condition: service_healthy
-      auth-db:
-        condition: service_healthy
+  # sales-app:
+  #   build: ./Caticket.SalesAPI
+  #   ports:
+  #     - 5002:5000
+  #   volumes:
+  #     - ./Caticket.SalesAPI:/home/dotnet/app
+  #   command: ["dotnet", "run", "--project", "./src/Caticket.SalesAPI.Web"]
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "curl --fail http://localhost:5000/health || exit 1"]
+  #     interval: 20s
+  #     timeout: 20s
+  #     retries: 3
+  #   depends_on:
+  #     sales-db:
+  #       condition: service_healthy
+  #     auth-db:
+  #       condition: service_healthy
 
   # front-end:
   #   build: ./caticket
