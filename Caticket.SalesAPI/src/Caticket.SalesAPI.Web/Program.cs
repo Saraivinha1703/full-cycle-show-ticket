@@ -9,6 +9,8 @@ using Caticket.SalesAPI.Web.Endpoints;
 using Caticket.SalesAPI.Web.Services;
 using Caticket.SalesAPI.Identity.DTOs.Request;
 
+string AllowSpecificOrigins = "AllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +18,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: AllowSpecificOrigins,
+        policy  =>
+            {
+                policy.AllowAnyOrigin();
+                policy.AllowAnyHeader();
+            }
+        );
+});
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureIdentity(builder.Configuration);
@@ -38,7 +51,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseIdentity();
-
+app.UseCors(AllowSpecificOrigins);
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
